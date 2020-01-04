@@ -19,6 +19,10 @@ Quickstart
 
 Basic Usage
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+* Drag the "Database" prefab into your scene.
+* Configure the options on the "Database" prefab.
+* See the included "Example" files.
+
 * All scripts are in the "wovencode" namespace
 * Add "using wovencode;" to your script headers.
 
