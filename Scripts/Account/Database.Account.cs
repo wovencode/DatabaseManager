@@ -105,7 +105,7 @@ namespace wovencode
 		public bool TryLogin(string _name, string _password)
 		{
 		
-			if (!string.IsNullOrWhiteSpace(_name) && !string.IsNullOrWhiteSpace(_password))
+			if (Tools.IsAllowedName(_name) && Tools.IsAllowedPassword(_password))
 			{
 				
 				if (!AccountExists(_name))
@@ -124,7 +124,7 @@ namespace wovencode
 		public bool TryRegister(string _name, string _password)
 		{
 		
-			if (!string.IsNullOrWhiteSpace(_name) && !string.IsNullOrWhiteSpace(_password))
+			if (Tools.IsAllowedName(_name) && Tools.IsAllowedPassword(_password))
 			{
 				
 				if (AccountExists(_name))
@@ -142,7 +142,7 @@ namespace wovencode
 		public bool TryDelete(string _name, string _password)
 		{
 		
-			if (!string.IsNullOrWhiteSpace(_name) && !string.IsNullOrWhiteSpace(_password))
+			if (Tools.IsAllowedName(_name) && Tools.IsAllowedPassword(_password))
 			{
 				
 				if (!AccountExists(_name))
