@@ -99,6 +99,15 @@ namespace wovencode
 			connection.Execute("UPDATE TableAccount SET banned=? WHERE name=?", _action, _name);
 		}
 		
+		// -------------------------------------------------------------------------------
+		// AccountSetConfirmed
+		// Sets the account to confirmed (1) or unconfirms it (0)
+		// -------------------------------------------------------------------------------
+		protected void AccountSetConfirmed(string _name, int _action=1)
+		{
+			connection.Execute("UPDATE TableAccount SET confirmed=? WHERE name=?", _action, _name);
+		}
+		
 		// ============================== PUBLIC METHODS =================================
 		
 		// -------------------------------------------------------------------------------
@@ -139,7 +148,7 @@ namespace wovencode
 		}
 		
 		// -------------------------------------------------------------------------------
-		public bool TryDelete(string _name, string _password)
+		public bool TryDelete(string _name, string _password, int _action=1)
 		{
 		
 			if (Tools.IsAllowedName(_name) && Tools.IsAllowedPassword(_password))
@@ -150,7 +159,47 @@ namespace wovencode
 
 				if (AccountValid(_name, _password))
 				{
-					AccountSetDeleted(_name);
+					AccountSetDeleted(_name, _action);
+					return true;	
+				}
+			}
+			return false;
+		
+		}
+		
+		// -------------------------------------------------------------------------------
+		public bool TryBan(string _name, string _password, int _action=1)
+		{
+		
+			if (Tools.IsAllowedName(_name) && Tools.IsAllowedPassword(_password))
+			{
+				
+				if (!AccountExists(_name))
+					return false;
+
+				if (AccountValid(_name, _password))
+				{
+					AccountSetBanned(_name, _action);
+					return true;	
+				}
+			}
+			return false;
+		
+		}
+		
+		// -------------------------------------------------------------------------------
+		public bool TryConfirm(string _name, string _password, int _action=1)
+		{
+		
+			if (Tools.IsAllowedName(_name) && Tools.IsAllowedPassword(_password))
+			{
+				
+				if (!AccountExists(_name))
+					return false;
+
+				if (AccountValid(_name, _password))
+				{
+					AccountSetConfirmed(_name, _action);
 					return true;	
 				}
 			}
