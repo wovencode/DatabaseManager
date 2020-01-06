@@ -24,6 +24,7 @@ namespace wovencode
 		public bool deleted 		{ get; set; }
 		public bool banned 			{ get; set; }
 		public bool online 			{ get; set; }
+		public bool confirmed		{ get; set; }
 		public DateTime lastsaved 	{ get; set; }
 	}
 		
