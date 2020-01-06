@@ -23,6 +23,10 @@ Basic Usage
 * Configure the options on the "Database" prefab.
 * See the included "Example" files.
 
+* This script uses SQLite.net open-source implementation:
+
+from https://github.com/praeclarum/sqlite-net
+
 * All scripts are in the "wovencode" namespace
 * Add "using wovencode;" to your script headers.
 
