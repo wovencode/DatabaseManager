@@ -140,7 +140,6 @@ namespace wovencode
 					return false;
 
 				AccountCreate(_name, _password);
-				AccountSetOnline(_name);
 				return true;
 				
 			}
