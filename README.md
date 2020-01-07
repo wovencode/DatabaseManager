@@ -1,15 +1,12 @@
-# woco-database
- Wovencore Database (SQLite)
-
-WOVENCODE UNITY3d OPEN-SOURCE CLASSES
+Database SQLite (Wovencore)
 ==========================================================================================
-
 by Fhiz (Weaver)
 MIT licensed
+https://github.com/wovencode/
 
 Summary
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
-A collection of common scripts that are part of my future Unity3d projects.
+A simple, generic SQLite database for both multiplayer and single-player games.
 
 Quickstart
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
@@ -23,12 +20,17 @@ Basic Usage
 * Configure the options on the "Database" prefab.
 * See the included "Example" files.
 
-* This script uses SQLite.net open-source implementation:
-
-from https://github.com/praeclarum/sqlite-net
-
 * All scripts are in the "wovencode" namespace
 * Add "using wovencode;" to your script headers.
+
+Requirements
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+* Wovencore Tools (https//github.com/wovencode/woco-tools)
+
+Contains Open-Source Code
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+* SQLite DLLs
+* SQLite Net (https://github.com/praeclarum/sqlite-net)
 
 Documentation
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
