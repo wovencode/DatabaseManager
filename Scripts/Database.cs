@@ -93,7 +93,7 @@ namespace wovencode
 			if (checkIntegrity)
 				Tools.SetChecksum(_dbPath);
 			
-			//this.InvokeInstanceDevExtMethods("Destruct"); // enable if required
+			this.InvokeInstanceDevExtMethods("Destruct");
 			
 		}	
 		
