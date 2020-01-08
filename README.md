@@ -29,8 +29,9 @@ Requirements
 
 Contains Open-Source Code
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
-* SQLite DLLs
+* SQLite dll
 * SQLite Net (https://github.com/praeclarum/sqlite-net)
+* mySQL dll
 
 Documentation
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
