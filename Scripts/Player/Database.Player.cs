@@ -1,5 +1,5 @@
 ﻿// =======================================================================================
-// Database - Account
+// Database - Player
 // by Weaver (Fhiz)
 // MIT licensed
 // =======================================================================================
@@ -25,87 +25,87 @@ namespace wovencode
 		
 		// -------------------------------------------------------------------------------
 		[DevExtMethods("Init")]
-		void Init_Account()
+		void Init_Player()
 		{
-	   		connection.CreateTable<TableAccount>();
+	   		connection.CreateTable<TablePlayer>();
 		}
 		
 	   	// -------------------------------------------------------------------------------
 	   	[DevExtMethods("CreateDefaultData")]
-		void CreateDefaultData_Account(GameObject player)
+		void CreateDefaultData_Player(GameObject player)
 		{
 			/*
-				accounts have no default data, feel free to add your own
+				players have no default data, feel free to add your own
 				
-				instead, account data is saved/loaded as part of the register/login process
+				instead, player data is saved/loaded as part of the register/login process
 			*/
 		}
 		
 		// -------------------------------------------------------------------------------
 		[DevExtMethods("LoadDataWithPriority")]
-		void LoadDataWithPriority_Account(GameObject player)
+		void LoadDataWithPriority_Player(GameObject player)
 		{
 			/*
-				accounts do not load priority data, feel free to add your own
+				players do not load priority data, feel free to add your own
 				
-				instead, account data is saved/loaded as part of the register/login process
+				instead, player data is saved/loaded as part of the register/login process
 			*/
 		}
 		
 	   	// -------------------------------------------------------------------------------
 		[DevExtMethods("LoadData")]
-		void LoadData_Account(GameObject player)
+		void LoadData_Player(GameObject player)
 		{
 	   		/*
-				accounts do not load any data, feel free to add your own
+				players do not load any data, feel free to add your own
 				
-				instead, account data is saved/loaded as part of the register/login process
+				instead, player data is saved/loaded as part of the register/login process
 			*/
 		}
 		
 	   	// -------------------------------------------------------------------------------
 		[DevExtMethods("SaveData")]
-		void SaveData_Account(GameObject player)
+		void SaveData_Player(GameObject player)
 		{
-	   		connection.Execute("UPDATE TableAccount SET lastsaved=? WHERE name=?", DateTime.UtcNow, player.name);
+	   		connection.Execute("UPDATE TablePlayer SET lastsaved=? WHERE name=?", DateTime.UtcNow, player.name);
 		}
 		
 		// ============================ PROTECTED METHODS ================================
 		
 		// -------------------------------------------------------------------------------
-		// AccountSetOnline
-		// Sets the account online (1) or offline (0) and updates last login time
+		// PlayerSetOnline
+		// Sets the player online (1) or offline (0) and updates last login time
 		// -------------------------------------------------------------------------------
-		protected void AccountSetOnline(string _name, int _action=1)
+		protected void PlayerSetOnline(string _name, int _action=1)
 		{
-			connection.Execute("UPDATE TableAccount SET online=?, lastlogin=? WHERE name=?", _action, DateTime.UtcNow, _name);
+			connection.Execute("UPDATE TablePlayer SET online=?, lastlogin=? WHERE name=?", _action, DateTime.UtcNow, _name);
 		}
 		
 		// -------------------------------------------------------------------------------
-		// AccountSetDeleted
-		// Sets the account to deleted (1) or undeletes it (0)
+		// PlayerSetDeleted
+		// Sets the player to deleted (1) or undeletes it (0)
 		// -------------------------------------------------------------------------------
-		protected void AccountSetDeleted(string _name, int _action=1)
+		protected void PlayerSetDeleted(string _name, int _action=1)
 		{
-			connection.Execute("UPDATE TableAccount SET deleted=? WHERE name=?", _action, _name);
+			connection.Execute("UPDATE TablePlayer SET deleted=? WHERE name=?", _action, _name);
 		}
 		
 		// -------------------------------------------------------------------------------
-		// AccountSetBanned
-		// Bans (1) or unbans (0) the account
+		// PlayerSetBanned
+		// Bans (1) or unbans (0) the player
 		// -------------------------------------------------------------------------------
-		protected void AccountSetBanned(string _name, int _action=1)
+		protected void PlayerSetBanned(string _name, int _action=1)
 		{
-			connection.Execute("UPDATE TableAccount SET banned=? WHERE name=?", _action, _name);
+			connection.Execute("UPDATE TablePlayer SET banned=? WHERE name=?", _action, _name);
 		}
 		
 		// -------------------------------------------------------------------------------
-		// AccountSetConfirmed
-		// Sets the account to confirmed (1) or unconfirms it (0)
+		// PlayerSetConfirmed
+		// Sets the player to confirmed (1) or unconfirms it (0)
 		// -------------------------------------------------------------------------------
-		protected void AccountSetConfirmed(string _name, int _action=1)
+		protected void PlayerSetConfirmed(string _name, int _action=1)
 		{
-			connection.Execute("UPDATE TableAccount SET confirmed=? WHERE name=?", _action, _name);
+			connection.Execute("UPDATE TablePlayer SET confirmed=? WHERE name=?", _action, _name);
 		}
 		
 		// ============================== PUBLIC METHODS =================================
@@ -117,12 +117,12 @@ namespace wovencode
 			if (Tools.IsAllowedName(_name) && Tools.IsAllowedPassword(_password))
 			{
 				
-				if (!AccountExists(_name))
+				if (!PlayerExists(_name))
 					return false;
 
-				if (AccountValid(_name, _password))
+				if (PlayerValid(_name, _password))
 				{
-					AccountSetOnline(_name);
+					PlayerSetOnline(_name);
 					return true;
 				}
 			}
@@ -136,10 +136,10 @@ namespace wovencode
 			if (Tools.IsAllowedName(_name) && Tools.IsAllowedPassword(_password))
 			{
 				
-				if (AccountExists(_name))
+				if (PlayerExists(_name))
 					return false;
 
-				AccountCreate(_name, _password);
+				PlayerCreate(_name, _password);
 				return true;
 				
 			}
@@ -153,12 +153,12 @@ namespace wovencode
 			if (Tools.IsAllowedName(_name) && Tools.IsAllowedPassword(_password))
 			{
 				
-				if (!AccountExists(_name))
+				if (!PlayerExists(_name))
 					return false;
 
-				if (AccountValid(_name, _password))
+				if (PlayerValid(_name, _password))
 				{
-					AccountSetDeleted(_name, _action);
+					PlayerSetDeleted(_name, _action);
 					return true;	
 				}
 			}
@@ -173,12 +173,12 @@ namespace wovencode
 			if (Tools.IsAllowedName(_name) && Tools.IsAllowedPassword(_password))
 			{
 				
-				if (!AccountExists(_name))
+				if (!PlayerExists(_name))
 					return false;
 
-				if (AccountValid(_name, _password))
+				if (PlayerValid(_name, _password))
 				{
-					AccountSetBanned(_name, _action);
+					PlayerSetBanned(_name, _action);
 					return true;	
 				}
 			}
@@ -193,12 +193,12 @@ namespace wovencode
 			if (Tools.IsAllowedName(_name) && Tools.IsAllowedPassword(_password))
 			{
 				
-				if (!AccountExists(_name))
+				if (!PlayerExists(_name))
 					return false;
 
-				if (AccountValid(_name, _password))
+				if (PlayerValid(_name, _password))
 				{
-					AccountSetConfirmed(_name, _action);
+					PlayerSetConfirmed(_name, _action);
 					return true;	
 				}
 			}
@@ -207,31 +207,31 @@ namespace wovencode
 		}
 		
 		// -------------------------------------------------------------------------------
-		public bool AccountValidate(string _name, string _password)
+		public bool PlayerValidate(string _name, string _password)
 		{
 			
-			if (AccountValid(_name, _password))
+			if (PlayerValid(_name, _password))
 				return true;
 				
 			return false;
 		}
 		
 		// -------------------------------------------------------------------------------
-		public void AccountCreate(string _name, string _password)
+		public void PlayerCreate(string _name, string _password)
 		{
-			connection.Insert(new TableAccount{ name=_name, password=_password, created=DateTime.UtcNow, lastlogin=DateTime.Now, banned=false});
+			connection.Insert(new TablePlayer{ name=_name, password=_password, created=DateTime.UtcNow, lastlogin=DateTime.Now, banned=false});
 		}
 		
 		// -------------------------------------------------------------------------------
-		public bool AccountValid(string _name, string _password)
+		public bool PlayerValid(string _name, string _password)
 		{
-			return connection.FindWithQuery<TableAccount>("SELECT * FROM TableAccount WHERE name=? AND password=? and banned=0", _name, _password) != null;
+			return connection.FindWithQuery<TablePlayer>("SELECT * FROM TablePlayer WHERE name=? AND password=? and banned=0", _name, _password) != null;
 		}
 		
 		// -------------------------------------------------------------------------------
-		public bool AccountExists(string _name)
+		public bool PlayerExists(string _name)
 		{
-			return connection.FindWithQuery<TableAccount>("SELECT * FROM TableAccount WHERE name=?", _name) != null;
+			return connection.FindWithQuery<TablePlayer>("SELECT * FROM TablePlayer WHERE name=?", _name) != null;
 		}
 		
 		// -------------------------------------------------------------------------------
