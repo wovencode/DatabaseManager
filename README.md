@@ -1,4 +1,4 @@
-Database SQLite (Wovencore)
+Database (Wovencore)
 ==========================================================================================
 by Fhiz (Weaver)
 MIT licensed
@@ -6,7 +6,8 @@ https://github.com/wovencode/
 
 Summary
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
-A simple, generic SQLite database for both multiplayer and single-player games.
+A simple, generic SQLite and mySQL database system for both multiplayer and single-player
+games.
 
 Quickstart
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
