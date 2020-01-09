@@ -27,7 +27,7 @@ namespace wovencode
 		[DevExtMethods("Init")]
 		void Init_Player()
 		{
-	   		connection.CreateTable<TablePlayer>();
+	   		CreateTable<TablePlayer>();
 		}
 		
 	   	// -------------------------------------------------------------------------------
@@ -67,7 +67,7 @@ namespace wovencode
 		[DevExtMethods("SaveData")]
 		void SaveData_Player(GameObject player)
 		{
-	   		connection.Execute("UPDATE TablePlayer SET lastsaved=? WHERE name=?", DateTime.UtcNow, player.name);
+	   		Execute("UPDATE TablePlayer SET lastsaved=? WHERE name=?", DateTime.UtcNow, player.name);
 		}
 		
 		// ============================ PROTECTED METHODS ================================
@@ -78,7 +78,7 @@ namespace wovencode
 		// -------------------------------------------------------------------------------
 		protected void PlayerSetOnline(string _name, int _action=1)
 		{
-			connection.Execute("UPDATE TablePlayer SET online=?, lastlogin=? WHERE name=?", _action, DateTime.UtcNow, _name);
+			Execute("UPDATE TablePlayer SET online=?, lastlogin=? WHERE name=?", _action, DateTime.UtcNow, _name);
 		}
 		
 		// -------------------------------------------------------------------------------
@@ -87,7 +87,7 @@ namespace wovencode
 		// -------------------------------------------------------------------------------
 		protected void PlayerSetDeleted(string _name, int _action=1)
 		{
-			connection.Execute("UPDATE TablePlayer SET deleted=? WHERE name=?", _action, _name);
+			Execute("UPDATE TablePlayer SET deleted=? WHERE name=?", _action, _name);
 		}
 		
 		// -------------------------------------------------------------------------------
@@ -96,7 +96,7 @@ namespace wovencode
 		// -------------------------------------------------------------------------------
 		protected void PlayerSetBanned(string _name, int _action=1)
 		{
-			connection.Execute("UPDATE TablePlayer SET banned=? WHERE name=?", _action, _name);
+			Execute("UPDATE TablePlayer SET banned=? WHERE name=?", _action, _name);
 		}
 		
 		// -------------------------------------------------------------------------------
@@ -105,7 +105,7 @@ namespace wovencode
 		// -------------------------------------------------------------------------------
 		protected void PlayerSetConfirmed(string _name, int _action=1)
 		{
-			connection.Execute("UPDATE TablePlayer SET confirmed=? WHERE name=?", _action, _name);
+			Execute("UPDATE TablePlayer SET confirmed=? WHERE name=?", _action, _name);
 		}
 		
 		// ============================== PUBLIC METHODS =================================
@@ -219,19 +219,19 @@ namespace wovencode
 		// -------------------------------------------------------------------------------
 		public void PlayerCreate(string _name, string _password)
 		{
-			connection.Insert(new TablePlayer{ name=_name, password=_password, created=DateTime.UtcNow, lastlogin=DateTime.Now, banned=false});
+			Insert(new TablePlayer{ name=_name, password=_password, created=DateTime.UtcNow, lastlogin=DateTime.Now, banned=false});
 		}
 		
 		// -------------------------------------------------------------------------------
 		public bool PlayerValid(string _name, string _password)
 		{
-			return connection.FindWithQuery<TablePlayer>("SELECT * FROM TablePlayer WHERE name=? AND password=? and banned=0", _name, _password) != null;
+			return FindWithQuery<TablePlayer>("SELECT * FROM TablePlayer WHERE name=? AND password=? and banned=0", _name, _password) != null;
 		}
 		
 		// -------------------------------------------------------------------------------
 		public bool PlayerExists(string _name)
 		{
-			return connection.FindWithQuery<TablePlayer>("SELECT * FROM TablePlayer WHERE name=?", _name) != null;
+			return FindWithQuery<TablePlayer>("SELECT * FROM TablePlayer WHERE name=?", _name) != null;
 		}
 		
 		// -------------------------------------------------------------------------------

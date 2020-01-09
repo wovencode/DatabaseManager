@@ -1,5 +1,5 @@
 ﻿// =======================================================================================
-// DatabaseLayerMySQL
+// Database
 // by Weaver (Fhiz)
 // MIT licensed
 // =======================================================================================
@@ -7,122 +7,144 @@
 using wovencode;
 using UnityEngine;
 using System;
+using System.IO;
 using System.Collections.Generic;
-using MySql.Data;
-using MySql.Data.MySqlClient;
+using SQLite;
 
 namespace wovencode
 {
 	
 	// ===================================================================================
-	// DatabaseLayerMySQL
+	// Database
 	// ===================================================================================
-	[System.Serializable]
-	public partial class DatabaseLayerMySQL : DatabaseAbstractionLayer
+	public partial class Database : MonoBehaviour
 	{
-		
-		/*
-			TODO:
-			
-			The whole section is still work in progress
-			
-		*/
-		
-		// ================================ API METHODS ==================================
 		
 		// -------------------------------------------------------------------------------
 		// Awake
+		// Sets the singleton on awake, database can be accessed from anywhere by using it
 		// -------------------------------------------------------------------------------
-		public override void Awake()
+		public void Awake()
 		{
+			if (singleton == null) singleton = this;
+			databaseLayer.OpenConnection();
 		}
 		
 		// -------------------------------------------------------------------------------
-		// 
+		// Init
+		// creates/connects to the database and creates all tables
+		// for a multiplayer server based game, this should only be called on the server
 		// -------------------------------------------------------------------------------
-		public override void OpenConnection()
+		public void Init()
 		{
-		
+			
+			OpenConnection();
+			
+			this.InvokeInstanceDevExtMethods("Init");
+			
+			if (saveInterval > 0)
+				InvokeRepeating(nameof(SavePlayers), saveInterval, saveInterval);
+						
 		}
 		
 		// -------------------------------------------------------------------------------
-		// 
+		// Destruct
+		// closes the connection, cancels saving and updates the checksum (if required)
+		// for a multiplayer server based game, this should only be called on the server
 		// -------------------------------------------------------------------------------
-		public override void CloseConnection()
+		public void Destruct()
 		{
-		
+			CancelInvoke(nameof(SavePlayers));
+			CloseConnection();
+			this.InvokeInstanceDevExtMethods("Destruct");
 		}
 		
 		// -------------------------------------------------------------------------------
-		// 
+		// OpenConnection
 		// -------------------------------------------------------------------------------
-		public override void CreateTable<T>()
+		public void OpenConnection()
 		{
-		
+			databaseLayer.OpenConnection();
 		}
 		
 		// -------------------------------------------------------------------------------
-		// 
+		// CloseConnection
 		// -------------------------------------------------------------------------------
-		public override void CreateIndex(string tableName, string[] columnNames, bool unique = false)
+		public void CloseConnection()
 		{
-		
+			databaseLayer.CloseConnection();
 		}
 		
 		// -------------------------------------------------------------------------------
-		// 
+		// CreateTable
 		// -------------------------------------------------------------------------------
-		public override List<T> Query<T>(string query, params object[] args)
+		public void CreateTable<T>()
 		{
-			return null;
+			databaseLayer.CreateTable<T>();
 		}
 		
 		// -------------------------------------------------------------------------------
-		// 
+		// CreateIndex
 		// -------------------------------------------------------------------------------
-		public override void Execute(string query, params object[] args)
+		public void CreateIndex(string tableName, string[] columnNames, bool unique = false)
 		{
-		
+			databaseLayer.CreateIndex(tableName, columnNames, unique);
 		}
 		
 		// -------------------------------------------------------------------------------
-		// 
+		// Query
 		// -------------------------------------------------------------------------------
-		public override object FindWithQuery<T>(string query, params object[] args)
+		public List<T> Query<T>(string query, params object[] args) where T : new()
 		{
-			return null;
+			return databaseLayer.Query<T>(query, args);
 		}
 		
 		// -------------------------------------------------------------------------------
-		// 
+		// Execute
 		// -------------------------------------------------------------------------------
-		public override void Insert(object obj)
+		public void Execute(string query, params object[] args)
 		{
+			databaseLayer.Execute(query, args);
 		}
 		
 		// -------------------------------------------------------------------------------
-		// 
+		// FindWithQuery
 		// -------------------------------------------------------------------------------
-		public override void InsertOrReplace(object obj)
+		public object FindWithQuery<T>(string query, params object[] args)
 		{
-		
+			return databaseLayer.FindWithQuery<T>(query, args);
 		}
 		
 		// -------------------------------------------------------------------------------
-		// 
+		// Insert
 		// -------------------------------------------------------------------------------
-		public override void BeginTransaction()
+		public void Insert(object obj)
 		{
-		
-		
+			databaseLayer.Insert(obj);
 		}
 		
 		// -------------------------------------------------------------------------------
-		// 
+		// InsertOrReplace
 		// -------------------------------------------------------------------------------
-		public override void Commit()
+		public void InsertOrReplace(object obj)
 		{
+			databaseLayer.InsertOrReplace(obj);
+		}
 		
+		// -------------------------------------------------------------------------------
+		// BeginTransaction
+		// -------------------------------------------------------------------------------
+		public void BeginTransaction()
+		{
+			databaseLayer.BeginTransaction();
+		}
+		
+		// -------------------------------------------------------------------------------
+		// Commit
+		// -------------------------------------------------------------------------------
+		public void Commit()
+		{
+			databaseLayer.Commit();
 		}
 		
 		// -------------------------------------------------------------------------------

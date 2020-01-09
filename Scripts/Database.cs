@@ -18,84 +18,52 @@ namespace wovencode
 	// Database
 	// ===================================================================================
 	[DisallowMultipleComponent]
-	public partial class Database : MonoBehaviour
+	public partial class Database : MonoBehaviour, IAbstractableDatabase
 	{
 		
-		[Header("Options")]
-		public string databaseName 	= "Database.sqlite";
-		
+		[Header("Settings")]
+		public DatabaseType databaseType = DatabaseType.SQLite;
 		[Tooltip("Player data save interval in seconds (0 to disable).")]
 		public float saveInterval = 60f;
-		[Tooltip("Launch Automatically when the game is started (recommended for Single-Player games).")]
-		public bool initOnAwake;
-		[Tooltip("Compares the hash of the database with player prefs to prevent cheating.")]
-		public bool checkIntegrity;
 		
-		public 				SQLiteConnection 	connection;
-		public static 		Database 			singleton;
-		protected static 	string 				_dbPath = "";
+		public static Database singleton;
+		
+		protected DatabaseType _databaseType = DatabaseType.SQLite;
+		
+#if WOCO_MYSQL
+		[Header("Database Layer - mySQL")]
+		public DatabaseLayerMySQL databaseLayer;
+#elif WOCO_SQLITE
+		[Header("Database Layer - SQLite")]
+		public DatabaseLayerSQLite databaseLayer;
+#endif
+		
+		protected const string _defineSQLite 	= "WOCO_SQLITE";
+		protected const string _defineMySQL 	= "WOCO_MYSQL";
 		
 		// -------------------------------------------------------------------------------
-		// Awake
-		// Sets the singleton on awake, database can be accessed from anywhere by using it
+		// OnValidate
+		// updates the define to set the database layer depending of chosen database type
 		// -------------------------------------------------------------------------------
-		void Awake()
-		{
-			if (singleton == null) singleton = this;
-			
-			if (initOnAwake)
-				Init();
-		}
-			
-		// -------------------------------------------------------------------------------
-		// Init
-		// creates/connects to the database and creates all tables
-		// for a multiplayer server based game, this should only be called on the server
-		// -------------------------------------------------------------------------------
-		void Init()
+		void OnValidate()
 		{
 			
-			_dbPath = Tools.GetPath(databaseName);
-			
-			// checks if the database file has been manipulated outside of the game
-			// recommended for single-player games only, not recommended on very large files
-			if (File.Exists(_dbPath) &&
-				checkIntegrity &&
-				Tools.GetChecksum(_dbPath) == false)
+			if (databaseType == DatabaseType.mySQL && databaseType != _databaseType)
 			{
-				Debug.LogError("Database file is corrupted!");
-				// deletes the file, a fresh database file is re-created thereafter
-				File.Delete(_dbPath);
+				EditorTools.RemoveScriptingDefine(_defineSQLite);
+				EditorTools.AddScriptingDefine(_defineMySQL);
+				_databaseType = databaseType;
 			}
-
-			connection = new SQLiteConnection(_dbPath);
-
-			if (saveInterval > 0)
-				InvokeRepeating(nameof(SavePlayers), saveInterval, saveInterval);
+			else if (databaseType == DatabaseType.SQLite && databaseType != _databaseType)
+			{
+				EditorTools.RemoveScriptingDefine(_defineMySQL);
+				EditorTools.AddScriptingDefine(_defineSQLite);
+				_databaseType = databaseType;
+			}
 			
-			this.InvokeInstanceDevExtMethods("Init");
+			this.InvokeInstanceDevExtMethods("OnValidate");
 			
-			Debug.Log("[Database] initialized.");
 		}
-		
-		// -------------------------------------------------------------------------------
-		// Destruct
-		// closes the connection, cancels saving and updates the checksum (if required)
-		// for a multiplayer server based game, this should only be called on the server
-		// -------------------------------------------------------------------------------
-		void Destruct()
-		{
-		
-			CancelInvoke(nameof(SavePlayers));
-			
-			connection?.Close();
-		
-			if (checkIntegrity)
-				Tools.SetChecksum(_dbPath);
-			
-			this.InvokeInstanceDevExtMethods("Destruct");
-			
-		}	
 		
 		// -------------------------------------------------------------------------------
 		// SavePlayers
@@ -122,12 +90,12 @@ namespace wovencode
     		if (wovencode.NetworkManager.onlinePlayers.Count == 0)
     			return; 
     		
-        	connection.BeginTransaction();
+        	databaseLayer.BeginTransaction();
         	
         	foreach (GameObject player in wovencode.NetworkManager.onlinePlayers.Values)
             	SaveData(player, online, false);
             	
-        	connection.Commit();
+        	databaseLayer.Commit();
         	
         	Debug.Log("[Database] Saved " + wovencode.NetworkManager.onlinePlayers.Count + " player(s)");
 #else
@@ -140,47 +108,14 @@ namespace wovencode
 			
 			*/
 			
-			//this.InvokeInstanceDevExtMethods("SavePlayers"); // enable if required
 #endif
+
+			this.InvokeInstanceDevExtMethods("SavePlayers");
+			
     	}
     	
-    	// =========================== PUBLIC METHODS ====================================
     	
-    	// -------------------------------------------------------------------------------
-		// CreateDefaultData
-		// -------------------------------------------------------------------------------
-		public void CreateDefaultData(GameObject player)
-		{
-			this.InvokeInstanceDevExtMethods("CreateDefaultData", player);
-		}
-		
-		// -------------------------------------------------------------------------------
-		// LoadData
-		// -------------------------------------------------------------------------------
-		public GameObject LoadData(GameObject prefab, string _name)
-		{
-			GameObject player = Instantiate(prefab);
-			player.name = _name;
-			this.InvokeInstanceDevExtMethods("LoadDataWithPriority", player);
-			this.InvokeInstanceDevExtMethods("LoadData", player);
-			return player;
-		}
-		
-		// -------------------------------------------------------------------------------
-		// SaveData
-		// -------------------------------------------------------------------------------
-		public void SaveData(GameObject player, bool online, bool useTransaction = true)
-		{
-			if (useTransaction)
-				connection.BeginTransaction();
-				
-			this.InvokeInstanceDevExtMethods("SaveData", player);
-			
-			if (useTransaction)
-				connection.Commit();
-		}
-		
-		// =========================== DEFAULT EVENTS ====================================
+    	// =========================== DEFAULT EVENTS ====================================
 		
 		// -------------------------------------------------------------------------------
 		// OnApplicationQuit
@@ -189,25 +124,7 @@ namespace wovencode
 		{
 			Destruct();
 		}
-		
-		// ======================== PUBLIC EVENT METHODS =================================
-		
-		// -------------------------------------------------------------------------------
-		// EventStartServer
-		// -------------------------------------------------------------------------------
-		public void EventStartServer()
-		{
-			Init();
-		}
-		
-		// -------------------------------------------------------------------------------
-		// EventStopServer
-		// -------------------------------------------------------------------------------
-		public void EventStopServer()
-		{
-			Destruct();
-		}
-		
+    	
 		// -------------------------------------------------------------------------------
 
 	}

@@ -27,8 +27,8 @@ namespace wovencode
 		[DevExtMethods("Init")]
 		void Init_Example()
 		{
-	   		connection.CreateTable<TableExample>();
-        	connection.CreateIndex(nameof(TableExample), new []{"owner", "name", "amount"});
+	   		CreateTable<TableExample>();
+        	CreateIndex(nameof(TableExample), new []{"owner", "name", "amount"});
 		}
 		
 		// -------------------------------------------------------------------------------
@@ -79,7 +79,7 @@ namespace wovencode
 	   		/*
 	   		InventoryManager manager = player.GetComponent<InventoryManager>();
 	   		
-			foreach (TableExample row in connection.Query<TableExample>("SELECT * FROM TableExample WHERE owner=?", player.name))
+			foreach (TableExample row in Query<TableExample>("SELECT * FROM TableExample WHERE owner=?", player.name))
 			{
 				if (ItemTemplate.dict.TryGetValue(row.name.GetDeterministicHashCode(), out ItemTemplate template))
 				{
@@ -98,7 +98,7 @@ namespace wovencode
 		{
 		
 			// you should delete all data of this player first, to prevent duplicates
-	   		connection.Execute("DELETE FROM TableExample WHERE owner=?", player.name);
+	   		Execute("DELETE FROM TableExample WHERE owner=?", player.name);
 	   		
 	   		/*
 	   			This function saves any kind of data from your player object to the
@@ -119,7 +119,7 @@ namespace wovencode
 	   			
 	   			ItemSyncStruct entry = list[i];
 	   			
-	   			connection.InsertOrReplace(new TableExample{
+	   			InsertOrReplace(new TableExample{
                 	owner 			= player.name,
                 	name 			= entry.name,
                 	amount 			= entry.amount,
