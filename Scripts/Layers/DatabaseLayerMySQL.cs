@@ -88,9 +88,9 @@ namespace wovencode
 		// -------------------------------------------------------------------------------
 		// 
 		// -------------------------------------------------------------------------------
-		public override object FindWithQuery<T>(string query, params object[] args)
+		public override T FindWithQuery<T>(string query, params object[] args)
 		{
-			return null;
+			return new T{};
 		}
 		
 		// -------------------------------------------------------------------------------

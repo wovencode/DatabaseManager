@@ -64,9 +64,7 @@ namespace wovencode
 			connection = new SQLiteConnection(_dbPath);
 
 			this.InvokeInstanceDevExtMethods("Init");
-			
-			Debug.Log("[SQLite Database] initialized.");
-		
+					
 		}
 		
 		// -------------------------------------------------------------------------------
@@ -119,9 +117,9 @@ namespace wovencode
 		// -------------------------------------------------------------------------------
 		// FindWithQuery
 		// -------------------------------------------------------------------------------
-		public override object FindWithQuery<T>(string query, params object[] args)
+		public override T FindWithQuery<T>(string query, params object[] args)
 		{
-			return null;
+			return connection.FindWithQuery<T>(query, args);
 		}
 		
 		// -------------------------------------------------------------------------------

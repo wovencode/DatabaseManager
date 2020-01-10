@@ -30,7 +30,7 @@ namespace wovencode
 		
 		void CreateTable<T>();
 		void CreateIndex(string tableName, string[] columnNames, bool unique = false);
-		object FindWithQuery<T>(string query, params object[] args);
+		T FindWithQuery<T>(string query, params object[] args) where T : new();
 		
 		void Insert(object obj);
 		

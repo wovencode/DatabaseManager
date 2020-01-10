@@ -1,5 +1,5 @@
 ﻿// =======================================================================================
-// Database
+// Wovencore
 // by Weaver (Fhiz)
 // MIT licensed
 // =======================================================================================
@@ -114,7 +114,7 @@ namespace wovencode
 		// -------------------------------------------------------------------------------
 		// FindWithQuery
 		// -------------------------------------------------------------------------------
-		public object FindWithQuery<T>(string query, params object[] args)
+		public T FindWithQuery<T>(string query, params object[] args) where T : new()
 		{
 			return databaseLayer.FindWithQuery<T>(query, args);
 		}

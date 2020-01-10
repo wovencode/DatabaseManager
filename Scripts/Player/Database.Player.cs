@@ -149,13 +149,11 @@ namespace wovencode
 		// -------------------------------------------------------------------------------
 		public bool TryLogin(string _name, string _password)
 		{
-		
+		Debug.Log("X)");
 			if (Tools.IsAllowedName(_name) && Tools.IsAllowedPassword(_password))
 			{
-				
-				if (!PlayerExists(_name))
-					return false;
-
+		
+Debug.Log("X)");
 				if (PlayerValid(_name, _password))
 				{
 					PlayerSetOnline(_name);
@@ -188,10 +186,6 @@ namespace wovencode
 		
 			if (Tools.IsAllowedName(_name) && Tools.IsAllowedPassword(_password))
 			{
-				
-				if (!PlayerExists(_name))
-					return false;
-
 				if (PlayerValid(_name, _password))
 				{
 					PlayerSetDeleted(_name, _action);
@@ -208,10 +202,6 @@ namespace wovencode
 		
 			if (Tools.IsAllowedName(_name) && Tools.IsAllowedPassword(_password))
 			{
-				
-				if (!PlayerExists(_name))
-					return false;
-
 				if (PlayerValid(_name, _password))
 				{
 					PlayerSetBanned(_name, _action);
@@ -228,10 +218,6 @@ namespace wovencode
 		
 			if (Tools.IsAllowedName(_name) && Tools.IsAllowedPassword(_password))
 			{
-				
-				if (!PlayerExists(_name))
-					return false;
-
 				if (PlayerValid(_name, _password))
 				{
 					PlayerSetConfirmed(_name, _action);
