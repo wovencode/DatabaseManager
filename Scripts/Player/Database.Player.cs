@@ -149,11 +149,8 @@ namespace wovencode
 		// -------------------------------------------------------------------------------
 		public bool TryLogin(string _name, string _password)
 		{
-		Debug.Log("X)");
 			if (Tools.IsAllowedName(_name) && Tools.IsAllowedPassword(_password))
 			{
-		
-Debug.Log("X)");
 				if (PlayerValid(_name, _password))
 				{
 					PlayerSetOnline(_name);
