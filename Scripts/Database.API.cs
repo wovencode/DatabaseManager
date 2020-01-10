@@ -27,7 +27,7 @@ namespace wovencode
 		public void Awake()
 		{
 			if (singleton == null) singleton = this;
-			databaseLayer.OpenConnection();
+			databaseLayer.Awake();
 		}
 		
 		// -------------------------------------------------------------------------------
