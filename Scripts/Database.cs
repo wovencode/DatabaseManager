@@ -25,6 +25,8 @@ namespace wovencode
 		public DatabaseType databaseType = DatabaseType.SQLite;
 		[Tooltip("Player data save interval in seconds (0 to disable).")]
 		public float saveInterval = 60f;
+		[Tooltip("Deleted Player erease interval in seconds (0 to disable).")]
+		public float deleteInterval = 60f;
 		
 		public static Database singleton;
 		
@@ -33,7 +35,7 @@ namespace wovencode
 #if WOCO_MYSQL
 		[Header("Database Layer - mySQL")]
 		public DatabaseLayerMySQL databaseLayer;
-#elif WOCO_SQLITE
+#else
 		[Header("Database Layer - SQLite")]
 		public DatabaseLayerSQLite databaseLayer;
 #endif
@@ -62,6 +64,22 @@ namespace wovencode
 			}
 			
 			this.InvokeInstanceDevExtMethods("OnValidate");
+			
+		}
+		
+		// -------------------------------------------------------------------------------
+		// DeletePlayers
+		// hard deletes all players that have been soft deleted before
+		// -------------------------------------------------------------------------------
+		void DeletePlayers()
+		{
+			
+			List<TablePlayer> players = Query<TablePlayer>("SELECT * FROM TablePlayer WHERE deleted=1");
+			
+			foreach (TablePlayer player in players)
+				this.InvokeInstanceDevExtMethods("DeleteData", player.name);
+			
+			Debug.Log("[Database] Deleted " + players.Count + " player(s)");
 			
 		}
 		

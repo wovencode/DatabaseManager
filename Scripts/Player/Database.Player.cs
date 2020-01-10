@@ -70,6 +70,15 @@ namespace wovencode
 	   		Execute("UPDATE TablePlayer SET lastsaved=? WHERE name=?", DateTime.UtcNow, player.name);
 		}
 		
+		// -------------------------------------------------------------------------------
+	   	// DeleteData_Player
+	   	// -------------------------------------------------------------------------------
+	   	[DevExtMethods("DeleteData")]
+	   	void DeleteData_Player(string _name)
+	   	{
+	   		Execute("DELETE FROM TablePlayer WHERE name=?", _name);
+	   	}
+		
 		// ============================ PROTECTED METHODS ================================
 		
 		// -------------------------------------------------------------------------------
@@ -100,12 +109,39 @@ namespace wovencode
 		}
 		
 		// -------------------------------------------------------------------------------
+		// EreasePlayer
+		// Hard Delete = permanently deletes the player and all of its data
+		// -------------------------------------------------------------------------------
+		protected void EreasePlayer(string _name)
+		{			
+			this.InvokeInstanceDevExtMethods("DeleteData", _name);
+		}
+		
+		// -------------------------------------------------------------------------------
 		// PlayerSetConfirmed
 		// Sets the player to confirmed (1) or unconfirms it (0)
 		// -------------------------------------------------------------------------------
 		protected void PlayerSetConfirmed(string _name, int _action=1)
 		{
 			Execute("UPDATE TablePlayer SET confirmed=? WHERE name=?", _action, _name);
+		}
+		
+		// -------------------------------------------------------------------------------
+		protected bool TryHardDelete(string _name, string _password)
+		{
+		
+			if (Tools.IsAllowedName(_name) && Tools.IsAllowedPassword(_password))
+			{
+				
+				if (!PlayerExists(_name))
+					return false;
+
+				EreasePlayer(_name);
+				return true;	
+				
+			}
+			return false;
+		
 		}
 		
 		// ============================== PUBLIC METHODS =================================
@@ -147,7 +183,7 @@ namespace wovencode
 		}
 		
 		// -------------------------------------------------------------------------------
-		public bool TryDelete(string _name, string _password, int _action=1)
+		public bool TrySoftDelete(string _name, string _password, int _action=1)
 		{
 		
 			if (Tools.IsAllowedName(_name) && Tools.IsAllowedPassword(_password))
@@ -225,7 +261,7 @@ namespace wovencode
 		// -------------------------------------------------------------------------------
 		public bool PlayerValid(string _name, string _password)
 		{
-			return FindWithQuery<TablePlayer>("SELECT * FROM TablePlayer WHERE name=? AND password=? and banned=0", _name, _password) != null;
+			return FindWithQuery<TablePlayer>("SELECT * FROM TablePlayer WHERE name=? AND password=? AND banned=0 AND deleted=0", _name, _password) != null;
 		}
 		
 		// -------------------------------------------------------------------------------

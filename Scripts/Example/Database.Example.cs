@@ -98,7 +98,7 @@ namespace wovencode
 		{
 		
 			// you should delete all data of this player first, to prevent duplicates
-	   		Execute("DELETE FROM TableExample WHERE owner=?", player.name);
+	   		DeleteData_Example(player.name);
 	   		
 	   		/*
 	   			This function saves any kind of data from your player object to the
@@ -127,7 +127,16 @@ namespace wovencode
 	   		}
 	   		*/
 		}
-	   
+	   	
+	   	// -------------------------------------------------------------------------------
+	   	// DeleteData_Example
+	   	// -------------------------------------------------------------------------------
+	   	[DevExtMethods("DeleteData")]
+	   	void DeleteData_Example(string _name)
+	   	{
+	   		Execute("DELETE FROM TableExample WHERE owner=?", _name);
+	   	}
+	   	
 		// -------------------------------------------------------------------------------
 
 	}

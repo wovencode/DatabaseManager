@@ -17,7 +17,7 @@ namespace wovencode
 	// ===================================================================================
 	// Database
 	// ===================================================================================
-	public partial class Database : MonoBehaviour
+	public partial class Database
 	{
 		
 		// -------------------------------------------------------------------------------
@@ -44,7 +44,10 @@ namespace wovencode
 			
 			if (saveInterval > 0)
 				InvokeRepeating(nameof(SavePlayers), saveInterval, saveInterval);
-						
+			
+			if (deleteInterval > 0)
+				InvokeRepeating(nameof(DeletePlayers), deleteInterval, deleteInterval);
+				
 		}
 		
 		// -------------------------------------------------------------------------------
@@ -55,6 +58,7 @@ namespace wovencode
 		public void Destruct()
 		{
 			CancelInvoke(nameof(SavePlayers));
+			CancelInvoke(nameof(DeletePlayers));
 			CloseConnection();
 			this.InvokeInstanceDevExtMethods("Destruct");
 		}
