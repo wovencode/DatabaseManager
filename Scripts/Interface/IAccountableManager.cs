@@ -1,5 +1,5 @@
 // =======================================================================================
-// IAbstractableDatabase
+// Wovencore
 // by Weaver (Fhiz)
 // MIT licensed
 //
@@ -13,24 +13,19 @@ using wovencode;
 
 namespace wovencode
 {
+
 	// ===================================================================================
-	// IAbstractableDatabase
+	// IAccountableManager
 	// ===================================================================================
-	public interface IAbstractableDatabase
+	public interface IAccountableManager
 	{
 		
-		void Awake();
-		void OpenConnection();
-		void CloseConnection();
-		void BeginTransaction();
-		void Commit();
-		void CreateTable<T>();
-		void CreateIndex(string tableName, string[] columnNames, bool unique = false);
-		T FindWithQuery<T>(string query, params object[] args) where T : new();
-		void Insert(object obj);
-		List<T> Query<T>(string query, params object[] args) where T : new();
-		void Execute(string query, params object[] args);
-		void InsertOrReplace(object obj);
+		bool TryLogin(string _name, string _password);
+		bool TryRegister(string _name, string _password);
+		bool TrySoftDelete(string _name, string _password, int _action=1);
+		bool TryBan(string _name, string _password, int _action=1);
+		bool TryConfirm(string _name, string _password, int _action=1);
+		bool TrySwitchServer(string _name, int _token=0);
 		
 	}
 		
