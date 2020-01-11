@@ -7,9 +7,6 @@
 using wovencode;
 using UnityEngine;
 using System;
-using System.IO;
-using System.Collections.Generic;
-using SQLite;
 
 namespace wovencode
 {
@@ -17,7 +14,7 @@ namespace wovencode
 	// ===================================================================================
 	// BaseDatabase
 	// ===================================================================================
-	public abstract partial class BaseDatabase : MonoBehaviour, IAccountableManager
+	public abstract partial class BaseDatabaseManager : MonoBehaviour, IAccountableManager
 	{
 		
     	// =========================== PUBLIC METHODS ====================================

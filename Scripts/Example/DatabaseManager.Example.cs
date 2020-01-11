@@ -1,5 +1,5 @@
 ﻿// =======================================================================================
-// Database - Example
+// Wovencore
 // by Weaver (Fhiz)
 // MIT licensed
 // =======================================================================================
@@ -7,7 +7,6 @@
 using wovencode;
 using UnityEngine;
 using System;
-using System.IO;
 using System.Collections.Generic;
 using SQLite;
 
@@ -15,9 +14,9 @@ namespace wovencode
 {
 
 	// ===================================================================================
-	// Database
+	// DatabaseManager
 	// ===================================================================================
-	public partial class Database
+	public partial class DatabaseManager
 	{
 	
 		// -------------------------------------------------------------------------------

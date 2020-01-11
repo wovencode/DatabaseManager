@@ -1,5 +1,5 @@
 // =======================================================================================
-// IAbstractableDatabase
+// Wovencore
 // by Weaver (Fhiz)
 // MIT licensed
 //
@@ -18,7 +18,6 @@ namespace wovencode
 	// ===================================================================================
 	public interface IAbstractableDatabase
 	{
-		
 		void Awake();
 		void OpenConnection();
 		void CloseConnection();
@@ -31,7 +30,6 @@ namespace wovencode
 		List<T> Query<T>(string query, params object[] args) where T : new();
 		void Execute(string query, params object[] args);
 		void InsertOrReplace(object obj);
-		
 	}
 		
 }

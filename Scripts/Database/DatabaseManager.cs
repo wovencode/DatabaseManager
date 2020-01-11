@@ -18,7 +18,7 @@ namespace wovencode
 	// Database
 	// ===================================================================================
 	[DisallowMultipleComponent]
-	public partial class Database : BaseDatabase, IAbstractableDatabase
+	public partial class DatabaseManager : BaseDatabaseManager, IAbstractableDatabase
 	{
 		
 		[Header("Settings")]
@@ -28,7 +28,7 @@ namespace wovencode
 		[Tooltip("Deleted Player erease interval in seconds (0 to disable).")]
 		public float deleteInterval = 60f;
 		
-		public static Database singleton;
+		public static DatabaseManager singleton;
 		
 		protected DatabaseType _databaseType = DatabaseType.SQLite;
 		

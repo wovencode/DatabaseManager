@@ -14,9 +14,9 @@ namespace wovencode
 {
 	
 	// ===================================================================================
-	// Database
+	// DatabaseManager
 	// ===================================================================================
-	public partial class Database
+	public partial class DatabaseManager
 	{
 		
 		// ============================= PUBLIC METHODS ==================================

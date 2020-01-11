@@ -19,14 +19,12 @@ namespace wovencode
 	// ===================================================================================
 	public interface IAccountableManager
 	{
-		
 		bool TryLogin(string _name, string _password);
 		bool TryRegister(string _name, string _password);
 		bool TrySoftDelete(string _name, string _password, int _action=1);
 		bool TryBan(string _name, string _password, int _action=1);
 		bool TryConfirm(string _name, string _password, int _action=1);
 		bool TrySwitchServer(string _name, int _token=0);
-		
 	}
 		
 }

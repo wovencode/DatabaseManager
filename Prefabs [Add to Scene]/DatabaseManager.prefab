@@ -43,7 +43,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c927fd3fe7261488995ea8b673e2def7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  databaseName: Database.sqlite
+  databaseType: 0
   saveInterval: 60
-  initOnAwake: 0
-  checkIntegrity: 0
+  deleteInterval: 60
+  databaseLayer:
+    databaseName: Database.sqlite
+    initOnAwake: 0
+    checkIntegrity: 0
