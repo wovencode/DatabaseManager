@@ -1,5 +1,5 @@
 ﻿// =======================================================================================
-// Database
+// Wovencore
 // by Weaver (Fhiz)
 // MIT licensed
 // =======================================================================================
@@ -18,7 +18,7 @@ namespace wovencode
 	// Database
 	// ===================================================================================
 	[DisallowMultipleComponent]
-	public partial class Database : MonoBehaviour, IAbstractableDatabase
+	public partial class Database : BaseDatabase, IAbstractableDatabase
 	{
 		
 		[Header("Settings")]
@@ -73,14 +73,16 @@ namespace wovencode
 		// -------------------------------------------------------------------------------
 		void DeletePlayers()
 		{
-			
+#if WOCO_PLAYER	
 			List<TablePlayer> players = Query<TablePlayer>("SELECT * FROM TablePlayer WHERE deleted=1");
-			
+
 			foreach (TablePlayer player in players)
 				this.InvokeInstanceDevExtMethods("DeleteData", player.name);
-			
+		
 			Debug.Log("[Database] Deleted " + players.Count + " player(s)");
+#endif
 			
+			this.InvokeInstanceDevExtMethods("DeletePlayers");
 		}
 		
 		// -------------------------------------------------------------------------------

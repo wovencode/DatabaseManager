@@ -1,5 +1,5 @@
 ﻿// =======================================================================================
-// Database
+// Wovencore
 // by Weaver (Fhiz)
 // MIT licensed
 // =======================================================================================
@@ -9,7 +9,6 @@ using UnityEngine;
 using System;
 using System.IO;
 using System.Collections.Generic;
-using SQLite;
 
 namespace wovencode
 {
@@ -17,11 +16,15 @@ namespace wovencode
 	// ===================================================================================
 	// Database
 	// ===================================================================================
-	public partial class Database : MonoBehaviour
+	public partial class Database
 	{
+		
+		// ============================= PUBLIC METHODS ==================================
 		
     	// -------------------------------------------------------------------------------
 		// CreateDefaultData
+		// called when a new player is registered, the hook is executed on all modules and
+		// used to parse default data onto the player (like starting Equipment etc.).
 		// -------------------------------------------------------------------------------
 		public void CreateDefaultData(GameObject player)
 		{
@@ -30,6 +33,8 @@ namespace wovencode
 		
 		// -------------------------------------------------------------------------------
 		// LoadData
+		// called when a player is loaded from the database, the hooks are executed on
+		// all modules and used to load additional player data.
 		// -------------------------------------------------------------------------------
 		public GameObject LoadData(GameObject prefab, string _name)
 		{
@@ -42,6 +47,8 @@ namespace wovencode
 		
 		// -------------------------------------------------------------------------------
 		// SaveData
+		// called when a player is saved to the database, the hook is executed on all
+		// modules and used to save additional player data.
 		// -------------------------------------------------------------------------------
 		public void SaveData(GameObject player, bool online, bool useTransaction = true)
 		{
