@@ -47,7 +47,9 @@ namespace wovencode
 		// -------------------------------------------------------------------------------
 		public override void OpenConnection()
 		{
-		
+			
+			if (connection != null) return;
+			
 			_dbPath = Tools.GetPath(databaseName);
 			
 			// checks if the database file has been manipulated outside of the game

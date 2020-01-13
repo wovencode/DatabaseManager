@@ -80,7 +80,7 @@ namespace wovencode
 	   		
 			foreach (TableExample row in Query<TableExample>("SELECT * FROM TableExample WHERE owner=?", player.name))
 			{
-				if (ItemTemplate.dict.TryGetValue(row.name.GetDeterministicHashCode(), out ItemTemplate template))
+				if (ItemTemplate.dict.TryGetValue(row.hash, out ItemTemplate template))
 				{
 					manager.AddEntry(row.owner, row.name, row.amount);
 				}
