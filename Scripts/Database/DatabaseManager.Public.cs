@@ -28,7 +28,7 @@ namespace wovencode
 		// -------------------------------------------------------------------------------
 		public void CreateDefaultData(GameObject player)
 		{
-			this.InvokeInstanceDevExtMethods("CreateDefaultData", player);
+			this.InvokeInstanceDevExtMethods(nameof(CreateDefaultData), player);
 		}
 		
 		// -------------------------------------------------------------------------------
@@ -41,7 +41,7 @@ namespace wovencode
 			GameObject player = Instantiate(prefab);
 			player.name = _name;
 			this.InvokeInstanceDevExtMethods("LoadDataWithPriority", player);
-			this.InvokeInstanceDevExtMethods("LoadData", player);
+			this.InvokeInstanceDevExtMethods(nameof(LoadData), player);
 			return player;
 		}
 		
@@ -55,7 +55,7 @@ namespace wovencode
 			if (useTransaction)
 				databaseLayer.BeginTransaction();
 				
-			this.InvokeInstanceDevExtMethods("SaveData", player);
+			this.InvokeInstanceDevExtMethods(nameof(SaveData), player);
 			
 			if (useTransaction)
 				databaseLayer.Commit();
