@@ -17,42 +17,74 @@ namespace wovencode
 	public abstract partial class BaseDatabaseManager : MonoBehaviour, IAccountableManager
 	{
 		
-    	// =========================== PUBLIC METHODS ====================================
+    	// ======================= PUBLIC METHODS - USER =================================
     	
 		// -------------------------------------------------------------------------------
-		public virtual bool TryLogin(string _name, string _password)
+		public virtual bool TryLoginUser(string name, string password)
 		{
-			return (Tools.IsAllowedName(_name) && Tools.IsAllowedPassword(_password));
+			return (Tools.IsAllowedName(name) && Tools.IsAllowedPassword(password));
 		}
 		
 		// -------------------------------------------------------------------------------
-		public virtual bool TryRegister(string _name, string _password)
+		public virtual bool TryRegisterUser(string name, string password)
 		{
-			return (Tools.IsAllowedName(_name) && Tools.IsAllowedPassword(_password));
+			return (Tools.IsAllowedName(name) && Tools.IsAllowedPassword(password));
 		}
 		
 		// -------------------------------------------------------------------------------
-		public virtual bool TrySoftDelete(string _name, string _password, int _action=1)
+		public virtual bool TrySoftDeleteUser(string name, string password, int _action=1)
 		{
-			return (Tools.IsAllowedName(_name) && Tools.IsAllowedPassword(_password));
+			return (Tools.IsAllowedName(name) && Tools.IsAllowedPassword(password));
 		}
 		
 		// -------------------------------------------------------------------------------
-		public virtual bool TryBan(string _name, string _password, int _action=1)
+		public virtual bool TryBanUser(string name, string password, int _action=1)
 		{
-			return (Tools.IsAllowedName(_name) && Tools.IsAllowedPassword(_password));
+			return (Tools.IsAllowedName(name) && Tools.IsAllowedPassword(password));
 		}
 		
 		// -------------------------------------------------------------------------------
-		public virtual bool TryConfirm(string _name, string _password, int _action=1)
+		public virtual bool TryChangePasswordUser(string name, string oldpassword, string newpassword)
 		{
-			return (Tools.IsAllowedName(_name) && Tools.IsAllowedPassword(_password));
+			return (Tools.IsAllowedName(name) && Tools.IsAllowedPassword(oldpassword) && Tools.IsAllowedPassword(newpassword) && oldpassword != newpassword);
 		}
 		
 		// -------------------------------------------------------------------------------
-		public virtual bool TrySwitchServer(string _name, int _token)
+		public virtual bool TryConfirmUser(string name, string password, int _action=1)
 		{
-			return (Tools.IsAllowedName(_name) && Tools.IsAllowedToken(_token));
+			return (Tools.IsAllowedName(name) && Tools.IsAllowedPassword(password));
+		}
+		
+		// ======================= PUBLIC METHODS - PLAYER ===============================
+		
+		// -------------------------------------------------------------------------------
+		public virtual bool TryLoginPlayer(string name, string username)
+		{
+			return (Tools.IsAllowedName(name) && Tools.IsAllowedPassword(username));
+		}
+		
+		// -------------------------------------------------------------------------------
+		public virtual bool TryRegisterPlayer(string name, string username)
+		{
+			return (Tools.IsAllowedName(name) && Tools.IsAllowedPassword(username));
+		}
+		
+		// -------------------------------------------------------------------------------
+		public virtual bool TrySoftDeletePlayer(string name, string username, int _action=1)
+		{
+			return (Tools.IsAllowedName(name) && Tools.IsAllowedPassword(username));
+		}
+		
+		// -------------------------------------------------------------------------------
+		public virtual bool TryBanPlayer(string name, string username, int _action=1)
+		{
+			return (Tools.IsAllowedName(name) && Tools.IsAllowedPassword(username));
+		}
+		
+		// -------------------------------------------------------------------------------
+		public virtual bool TrySwitchServerPlayer(string name, int _token)
+		{
+			return (Tools.IsAllowedName(name) && Tools.IsAllowedToken(_token));
 		}
 		
 		// -------------------------------------------------------------------------------

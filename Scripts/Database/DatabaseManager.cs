@@ -25,8 +25,8 @@ namespace wovencode
 		public DatabaseType databaseType = DatabaseType.SQLite;
 		[Tooltip("Player data save interval in seconds (0 to disable).")]
 		public float saveInterval = 60f;
-		[Tooltip("Deleted Player erease interval in seconds (0 to disable).")]
-		public float deleteInterval = 60f;
+		[Tooltip("Deleted user erease interval in seconds (0 to disable).")]
+		public float deleteInterval = 240f;
 		
 		public static DatabaseManager singleton;
 		
@@ -63,26 +63,26 @@ namespace wovencode
 				_databaseType = databaseType;
 			}
 			
-			this.InvokeInstanceDevExtMethods("OnValidate");
+			this.InvokeInstanceDevExtMethods(nameof(OnValidate));
 			
 		}
 		
 		// -------------------------------------------------------------------------------
-		// DeletePlayers
-		// hard deletes all players that have been soft deleted before
+		// DeleteUsers
+		// hard deletes all users that have been soft deleted before
 		// -------------------------------------------------------------------------------
-		void DeletePlayers()
+		void DeleteUsers()
 		{
 #if WOCO_PLAYER	
-			List<TablePlayer> players = Query<TablePlayer>("SELECT * FROM TablePlayer WHERE deleted=1");
+			List<TableUser> users = Query<TableUser>("SELECT * FROM TableUser WHERE deleted=1");
 
-			foreach (TablePlayer player in players)
-				this.InvokeInstanceDevExtMethods("DeleteData", player.name);
+			foreach (TableUser user in users)
+				this.InvokeInstanceDevExtMethods("DeleteData", user.name);
 		
-			Debug.Log("[Database] Deleted " + players.Count + " player(s)");
+			Debug.Log("[Database] Deleted " + users.Count + " user(s)");
 #endif
 			
-			this.InvokeInstanceDevExtMethods("DeletePlayers");
+			this.InvokeInstanceDevExtMethods(nameof(DeleteUsers));
 		}
 		
 		// -------------------------------------------------------------------------------
@@ -130,7 +130,7 @@ namespace wovencode
 			
 #endif
 
-			this.InvokeInstanceDevExtMethods("SavePlayers");
+			this.InvokeInstanceDevExtMethods(nameof(SavePlayers));
 			
     	}
     	

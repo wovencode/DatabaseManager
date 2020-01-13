@@ -40,13 +40,13 @@ namespace wovencode
 			
 			OpenConnection();
 			
-			this.InvokeInstanceDevExtMethods("Init");
+			this.InvokeInstanceDevExtMethods(nameof(Init));
 			
 			if (saveInterval > 0)
 				InvokeRepeating(nameof(SavePlayers), saveInterval, saveInterval);
 			
 			if (deleteInterval > 0)
-				InvokeRepeating(nameof(DeletePlayers), deleteInterval, deleteInterval);
+				InvokeRepeating(nameof(DeleteUsers), deleteInterval, deleteInterval);
 				
 		}
 		
@@ -57,10 +57,9 @@ namespace wovencode
 		// -------------------------------------------------------------------------------
 		public void Destruct()
 		{
-			CancelInvoke(nameof(SavePlayers));
-			CancelInvoke(nameof(DeletePlayers));
+			CancelInvoke();
 			CloseConnection();
-			this.InvokeInstanceDevExtMethods("Destruct");
+			this.InvokeInstanceDevExtMethods(nameof(Destruct));
 		}
 		
 		// -------------------------------------------------------------------------------

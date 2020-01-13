@@ -2,8 +2,6 @@
 // Wovencore
 // by Weaver (Fhiz)
 // MIT licensed
-//
-//
 // =======================================================================================
 
 using System;
@@ -19,12 +17,22 @@ namespace wovencode
 	// ===================================================================================
 	public interface IAccountableManager
 	{
-		bool TryLogin(string _name, string _password);
-		bool TryRegister(string _name, string _password);
-		bool TrySoftDelete(string _name, string _password, int _action=1);
-		bool TryBan(string _name, string _password, int _action=1);
-		bool TryConfirm(string _name, string _password, int _action=1);
-		bool TrySwitchServer(string _name, int _token=0);
+		
+		// User
+		bool TryLoginUser(string name, string password);
+		bool TryRegisterUser(string name, string password);
+		bool TrySoftDeleteUser(string name, string password, int action=1);
+		bool TryBanUser(string name, string password, int action=1);
+		bool TryChangePasswordUser(string name, string oldpassword, string newpassword);
+		bool TryConfirmUser(string name, string password, int action=1);
+		
+		// Player
+		bool TryLoginPlayer(string name, string _username);
+		bool TryRegisterPlayer(string name, string _username);
+		bool TrySoftDeletePlayer(string name, string _username, int action=1);
+		bool TryBanPlayer(string name, string _username, int action=1);
+		bool TrySwitchServerPlayer(string name, int _token=0);
+		
 	}
 		
 }
