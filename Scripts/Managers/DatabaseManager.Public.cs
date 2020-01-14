@@ -9,6 +9,7 @@ using UnityEngine;
 using System;
 using System.IO;
 using System.Collections.Generic;
+using Mirror;
 
 namespace wovencode
 {
@@ -46,37 +47,73 @@ namespace wovencode
 		}
 		
 		// -------------------------------------------------------------------------------
-		// SaveData
-		// called when a player is saved to the database, the hook is executed on all
-		// modules and used to save additional player data.
+		// SaveDataUser
+		// called when a user is saved to the database, the hook is executed on all
+		// modules and used to save additional data.
 		// -------------------------------------------------------------------------------
-		public void SaveData(GameObject player, bool online, bool useTransaction = true)
+		public void SaveDataUser(string username, bool isOnline=true, bool useTransaction = true)
 		{
 			if (useTransaction)
 				databaseLayer.BeginTransaction();
-				
-			this.InvokeInstanceDevExtMethods(nameof(SaveData), player);
+			
+			this.InvokeInstanceDevExtMethods(nameof(SaveDataUser), username, isOnline);
 			
 			if (useTransaction)
 				databaseLayer.Commit();
 		}
 		
-		// ======================== PUBLIC EVENT METHODS =================================
-		
 		// -------------------------------------------------------------------------------
-		// EventStartServer
+		// SaveDataPlayer
+		// called when a player is saved to the database, the hook is executed on all
+		// modules and used to save additional data.
 		// -------------------------------------------------------------------------------
-		public void EventStartServer()
+		public void SaveDataPlayer(GameObject player, bool isOnline=true, bool useTransaction = true)
 		{
-			Init();
+			if (useTransaction)
+				databaseLayer.BeginTransaction();
+			
+			this.InvokeInstanceDevExtMethods(nameof(SaveDataPlayer), player, isOnline);
+			
+			if (useTransaction)
+				databaseLayer.Commit();
 		}
 		
 		// -------------------------------------------------------------------------------
-		// EventStopServer
+		// LoginUser
+		// @NetworkManager
 		// -------------------------------------------------------------------------------
-		public void EventStopServer()
+		public void LoginUser(string name)
 		{
-			Destruct();
+			this.InvokeInstanceDevExtMethods(nameof(LoginUser), name);
+		}
+		
+		// -------------------------------------------------------------------------------
+		// LoginPlayer
+		// @NetworkManager
+		// -------------------------------------------------------------------------------
+		public void LoginPlayer(NetworkConnection conn)
+		{
+			this.InvokeInstanceDevExtMethods(nameof(LoginPlayer), conn);
+		}
+		
+		// -------------------------------------------------------------------------------
+		// LogoutUser
+		// @NetworkManager
+		// -------------------------------------------------------------------------------
+		public void LogoutUser(string username)
+		{
+			SaveDataUser(username, false);
+			this.InvokeInstanceDevExtMethods(nameof(LogoutUser), username);
+		}
+		
+		// -------------------------------------------------------------------------------
+		// LogoutPlayer
+		// @NetworkManager
+		// -------------------------------------------------------------------------------
+		public void LogoutPlayer(GameObject player)
+		{
+			SaveDataPlayer(player, false);
+			this.InvokeInstanceDevExtMethods(nameof(LogoutPlayer), player);
 		}
 		
 		// -------------------------------------------------------------------------------

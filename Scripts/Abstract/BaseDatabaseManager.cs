@@ -17,6 +17,9 @@ namespace wovencode
 	public abstract partial class BaseDatabaseManager : MonoBehaviour, IAccountableManager
 	{
 		
+		[Header("Debug Mode")]
+		public bool debugMode;
+		
     	// ======================= PUBLIC METHODS - USER =================================
     	
 		// -------------------------------------------------------------------------------

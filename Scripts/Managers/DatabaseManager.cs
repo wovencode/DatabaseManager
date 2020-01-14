@@ -32,7 +32,7 @@ namespace wovencode
 		
 		protected DatabaseType _databaseType = DatabaseType.SQLite;
 		
-#if WOCO_MYSQL
+#if wMYSQL
 		[Header("Database Layer - mySQL")]
 		public DatabaseLayerMySQL databaseLayer;
 #else
@@ -40,8 +40,8 @@ namespace wovencode
 		public DatabaseLayerSQLite databaseLayer;
 #endif
 		
-		protected const string _defineSQLite 	= "WOCO_SQLITE";
-		protected const string _defineMySQL 	= "WOCO_MYSQL";
+		protected const string _defineSQLite 	= "wSQLITE";
+		protected const string _defineMySQL 	= "wMYSQL";
 		
 		// -------------------------------------------------------------------------------
 		// OnValidate
@@ -49,7 +49,7 @@ namespace wovencode
 		// -------------------------------------------------------------------------------
 		void OnValidate()
 		{
-			
+#if UNITY_EDITOR
 			if (databaseType == DatabaseType.mySQL && databaseType != _databaseType)
 			{
 				EditorTools.RemoveScriptingDefine(_defineSQLite);
@@ -64,7 +64,7 @@ namespace wovencode
 			}
 			
 			this.InvokeInstanceDevExtMethods(nameof(OnValidate));
-			
+#endif
 		}
 		
 		// -------------------------------------------------------------------------------
@@ -73,13 +73,14 @@ namespace wovencode
 		// -------------------------------------------------------------------------------
 		void DeleteUsers()
 		{
-#if WOCO_PLAYER	
+#if wPLAYER	
 			List<TableUser> users = Query<TableUser>("SELECT * FROM TableUser WHERE deleted=1");
 
 			foreach (TableUser user in users)
 				this.InvokeInstanceDevExtMethods("DeleteData", user.name);
-		
-			Debug.Log("[Database] Deleted " + users.Count + " user(s)");
+			
+			if (debugMode && users.Count > 0)
+				Debug.Log("[Database] Deleted " + users.Count + " user(s)");
 #endif
 			
 			this.InvokeInstanceDevExtMethods(nameof(DeleteUsers));
@@ -99,7 +100,7 @@ namespace wovencode
 		// -------------------------------------------------------------------------------
 		void SavePlayers(bool online = true)
     	{
-#if WOCO_NETWORK
+#if wNETWORK
 			
 			/*
 				When using "Wovencode.Network", the database will automatically save
@@ -113,11 +114,12 @@ namespace wovencode
         	databaseLayer.BeginTransaction();
         	
         	foreach (GameObject player in wovencode.NetworkManager.onlinePlayers.Values)
-            	SaveData(player, online, false);
-            	
+            	SaveDataPlayer(player, online, false);
+            
         	databaseLayer.Commit();
         	
-        	Debug.Log("[Database] Saved " + wovencode.NetworkManager.onlinePlayers.Count + " player(s)");
+        	if (debugMode && wovencode.NetworkManager.onlinePlayers.Count > 0)
+        		Debug.Log("[Database] Saved " + wovencode.NetworkManager.onlinePlayers.Count + " player(s)");
 #else
 			
 			/*

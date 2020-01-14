@@ -19,7 +19,7 @@ namespace wovencode
 		[DevExtMethods("Constructor")]
 		public static void Constructor_DatabaseSQLite()
 		{
-			EditorTools.AddScriptingDefine("WOCO_DB");
+			EditorTools.AddScriptingDefine("wDB");
 		}
 
 	}
