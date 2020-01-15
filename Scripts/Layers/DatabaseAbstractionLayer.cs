@@ -19,7 +19,7 @@ namespace wovencode
 	public abstract partial class DatabaseAbstractionLayer : IAbstractableDatabase
 	{
 
-		public abstract void Awake();
+		public abstract void Init();
 		public abstract void OpenConnection();
 		public abstract void CloseConnection();
 		public abstract void CreateTable<T>();

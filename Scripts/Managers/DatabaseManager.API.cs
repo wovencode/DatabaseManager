@@ -23,11 +23,13 @@ namespace wovencode
 		// -------------------------------------------------------------------------------
 		// Awake
 		// Sets the singleton on awake, database can be accessed from anywhere by using it
+		// also calls "Init" on databaseLayer to create database and open connection if
+		// that is required
 		// -------------------------------------------------------------------------------
 		public void Awake()
 		{
 			if (singleton == null) singleton = this;
-			databaseLayer.Awake();
+			databaseLayer.Init();
 		}
 		
 		// -------------------------------------------------------------------------------

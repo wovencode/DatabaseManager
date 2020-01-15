@@ -36,7 +36,7 @@ namespace wovencode
 		// -------------------------------------------------------------------------------
 		// Awake
 		// -------------------------------------------------------------------------------
-		public override void Awake()
+		public override void Init()
 		{
 			if (!initOnAwake) return;
 			OpenConnection();

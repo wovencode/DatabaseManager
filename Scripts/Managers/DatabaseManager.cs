@@ -79,8 +79,8 @@ namespace wovencode
 			foreach (TableUser user in users)
 				this.InvokeInstanceDevExtMethods("DeleteData", user.name);
 			
-			if (debugMode && users.Count > 0)
-				Debug.Log("[Database] Deleted " + users.Count + " user(s)");
+			if (users.Count > 0)
+				debug.Log("[Database] Deleted " + users.Count + " user(s)");
 #endif
 			
 			this.InvokeInstanceDevExtMethods(nameof(DeleteUsers));
@@ -118,8 +118,8 @@ namespace wovencode
             
         	databaseLayer.Commit();
         	
-        	if (debugMode && wovencode.NetworkManager.onlinePlayers.Count > 0)
-        		Debug.Log("[Database] Saved " + wovencode.NetworkManager.onlinePlayers.Count + " player(s)");
+        	if (wovencode.NetworkManager.onlinePlayers.Count > 0)
+        		debug.Log("[Database] Saved " + wovencode.NetworkManager.onlinePlayers.Count + " player(s)");
 #else
 			
 			/*

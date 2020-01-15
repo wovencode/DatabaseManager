@@ -18,7 +18,7 @@ namespace wovencode
 	// ===================================================================================
 	public interface IAbstractableDatabase
 	{
-		void Awake();
+		void Init();
 		void OpenConnection();
 		void CloseConnection();
 		void BeginTransaction();
