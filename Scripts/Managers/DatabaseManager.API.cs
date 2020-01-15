@@ -49,7 +49,9 @@ namespace wovencode
 			
 			if (deleteInterval > 0)
 				InvokeRepeating(nameof(DeleteUsers), deleteInterval, deleteInterval);
-				
+			
+			this.InvokeInstanceDevExtMethods(nameof(Init));
+			
 		}
 		
 		// -------------------------------------------------------------------------------
