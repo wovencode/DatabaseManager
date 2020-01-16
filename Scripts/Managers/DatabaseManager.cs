@@ -25,7 +25,7 @@ namespace wovencode
 		public DatabaseType databaseType = DatabaseType.SQLite;
 		[Tooltip("Player data save interval in seconds (0 to disable).")]
 		public float saveInterval = 60f;
-		[Tooltip("Deleted user erease interval in seconds (0 to disable).")]
+		[Tooltip("Deleted user prune interval in seconds (0 to disable).")]
 		public float deleteInterval = 240f;
 		
 		public static DatabaseManager singleton;
