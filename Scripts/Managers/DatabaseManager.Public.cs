@@ -91,9 +91,10 @@ namespace wovencode
 		// LoginPlayer
 		// @NetworkManager
 		// -------------------------------------------------------------------------------
-		public void LoginPlayer(NetworkConnection conn)
+		public void LoginPlayer(string name)
 		{
-			this.InvokeInstanceDevExtMethods(nameof(LoginPlayer), conn);
+			PlayerSetOnline(name);
+			this.InvokeInstanceDevExtMethods(nameof(LoginPlayer), name);
 		}
 		
 		// -------------------------------------------------------------------------------

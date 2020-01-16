@@ -23,69 +23,90 @@ namespace wovencode
     	// ======================= PUBLIC METHODS - USER =================================
     	
 		// -------------------------------------------------------------------------------
-		public virtual bool TryLoginUser(string name, string password)
+		public virtual bool TryUserLogin(string name, string password)
 		{
 			return (Tools.IsAllowedName(name) && Tools.IsAllowedPassword(password));
 		}
 		
 		// -------------------------------------------------------------------------------
-		public virtual bool TryRegisterUser(string name, string password)
+		public virtual bool TryUserRegister(string name, string password)
 		{
 			return (Tools.IsAllowedName(name) && Tools.IsAllowedPassword(password));
 		}
 		
 		// -------------------------------------------------------------------------------
-		public virtual bool TrySoftDeleteUser(string name, string password, int _action=1)
+		public virtual bool TryUserDelete(string name, string password, int _action=1)
 		{
 			return (Tools.IsAllowedName(name) && Tools.IsAllowedPassword(password));
 		}
 		
 		// -------------------------------------------------------------------------------
-		public virtual bool TryBanUser(string name, string password, int _action=1)
+		public virtual bool TryUserBan(string name, string password, int _action=1)
 		{
 			return (Tools.IsAllowedName(name) && Tools.IsAllowedPassword(password));
 		}
 		
 		// -------------------------------------------------------------------------------
-		public virtual bool TryChangePasswordUser(string name, string oldpassword, string newpassword)
+		public virtual bool TryUserChangePassword(string name, string oldpassword, string newpassword)
 		{
 			return (Tools.IsAllowedName(name) && Tools.IsAllowedPassword(oldpassword) && Tools.IsAllowedPassword(newpassword) && oldpassword != newpassword);
 		}
 		
 		// -------------------------------------------------------------------------------
-		public virtual bool TryConfirmUser(string name, string password, int _action=1)
+		public virtual bool TryUserConfirm(string name, string password, int _action=1)
 		{
 			return (Tools.IsAllowedName(name) && Tools.IsAllowedPassword(password));
 		}
 		
+		// -------------------------------------------------------------------------------
+		public virtual bool TryUserGetValid(string name, string password)
+		{
+			return (Tools.IsAllowedName(name) && Tools.IsAllowedPassword(password));
+		}
+		
+		// -------------------------------------------------------------------------------
+		public virtual bool TryUserGetExists(string name)
+		{
+			return (Tools.IsAllowedName(name));
+		}
+		
+		// -------------------------------------------------------------------------------
+		public abstract int TryUserGetPlayerCount(string name);
+				
 		// ======================= PUBLIC METHODS - PLAYER ===============================
 		
 		// -------------------------------------------------------------------------------
-		public virtual bool TryLoginPlayer(string name, string username)
+		public virtual bool TryPlayerLogin(string name, string username)
 		{
 			return (Tools.IsAllowedName(name) && Tools.IsAllowedPassword(username));
 		}
 		
 		// -------------------------------------------------------------------------------
-		public virtual bool TryRegisterPlayer(string name, string username)
+		public virtual bool TryPlayerRegister(string name, string username)
 		{
 			return (Tools.IsAllowedName(name) && Tools.IsAllowedPassword(username));
 		}
 		
 		// -------------------------------------------------------------------------------
-		public virtual bool TrySoftDeletePlayer(string name, string username, int _action=1)
+		public virtual bool TryPlayerDeleteSoft(string name, string username, int _action=1)
 		{
 			return (Tools.IsAllowedName(name) && Tools.IsAllowedPassword(username));
 		}
 		
 		// -------------------------------------------------------------------------------
-		public virtual bool TryBanPlayer(string name, string username, int _action=1)
+		public virtual bool TryPlayerDeleteHard(string name)
+		{
+			return (Tools.IsAllowedName(name));
+		}
+		
+		// -------------------------------------------------------------------------------
+		public virtual bool TryPlayerBan(string name, string username, int _action=1)
 		{
 			return (Tools.IsAllowedName(name) && Tools.IsAllowedPassword(username));
 		}
 		
 		// -------------------------------------------------------------------------------
-		public virtual bool TrySwitchServerPlayer(string name, int _token)
+		public virtual bool TryPlayerSwitchServer(string name, int _token)
 		{
 			return (Tools.IsAllowedName(name) && Tools.IsAllowedToken(_token));
 		}

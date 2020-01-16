@@ -18,20 +18,24 @@ namespace wovencode
 	public interface IAccountableManager
 	{
 		
-		// User
-		bool TryLoginUser(string name, string password);
-		bool TryRegisterUser(string name, string password);
-		bool TrySoftDeleteUser(string name, string password, int action=1);
-		bool TryBanUser(string name, string password, int action=1);
-		bool TryChangePasswordUser(string name, string oldpassword, string newpassword);
-		bool TryConfirmUser(string name, string password, int action=1);
+		// ---- User
+		bool TryUserLogin(string name, string password);
+		bool TryUserRegister(string name, string password);
+		bool TryUserDelete(string name, string password, int action=1);
+		bool TryUserBan(string name, string password, int action=1);
+		bool TryUserChangePassword(string name, string oldpassword, string newpassword);
+		bool TryUserConfirm(string name, string password, int action=1);
+		bool TryUserGetValid(string name, string password);
+		bool TryUserGetExists(string name);
+		int TryUserGetPlayerCount(string name);
 		
-		// Player
-		bool TryLoginPlayer(string name, string _username);
-		bool TryRegisterPlayer(string name, string _username);
-		bool TrySoftDeletePlayer(string name, string _username, int action=1);
-		bool TryBanPlayer(string name, string _username, int action=1);
-		bool TrySwitchServerPlayer(string name, int _token=0);
+		// ---- Player
+		bool TryPlayerLogin(string name, string _username);
+		bool TryPlayerRegister(string name, string _username);
+		bool TryPlayerDeleteSoft(string name, string _username, int action=1);
+		bool TryPlayerDeleteHard(string name);
+		bool TryPlayerBan(string name, string _username, int action=1);
+		bool TryPlayerSwitchServer(string name, int _token=0);
 		
 	}
 		
