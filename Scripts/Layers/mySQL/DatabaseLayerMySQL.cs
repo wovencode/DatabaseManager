@@ -22,14 +22,7 @@ namespace wovencode
 	[System.Serializable]
 	public partial class DatabaseLayerMySQL : DatabaseAbstractionLayer
 	{
-		
-		/*
-			TODO:
-			
-			The whole section is still work in progress
-			
-		*/
-		
+	
 		[Header("Settings")]
         public string address 		= "127.0.0.1";
         public uint port 			= 3306;
@@ -44,26 +37,26 @@ namespace wovencode
 		// ================================ API METHODS ==================================
 		
 		// -------------------------------------------------------------------------------
-		// Awake
+		// Init
 		// -------------------------------------------------------------------------------
 		public override void Init()
 		{
 		}
 		
 		// -------------------------------------------------------------------------------
-		// 
+		// OpenConnection
 		// -------------------------------------------------------------------------------
 		public override void OpenConnection()
 		{
-		
+			connection.Open();
 		}
 		
 		// -------------------------------------------------------------------------------
-		// 
+		// CloseConnection
 		// -------------------------------------------------------------------------------
 		public override void CloseConnection()
 		{
-		
+			connection.Close();
 		}
 		
 		// -------------------------------------------------------------------------------
@@ -126,8 +119,7 @@ namespace wovencode
 		// -------------------------------------------------------------------------------
 		public override void BeginTransaction()
 		{
-		
-		
+			ExecuteNonQuery("START TRANSACTION");
 		}
 		
 		// -------------------------------------------------------------------------------
@@ -135,7 +127,7 @@ namespace wovencode
 		// -------------------------------------------------------------------------------
 		public override void Commit()
 		{
-		
+			ExecuteNonQuery("COMMIT");
 		}
 		
 		// ============================== PRIVATE METHODS ================================
@@ -182,7 +174,7 @@ namespace wovencode
 					{
 						Server 			= string.IsNullOrWhiteSpace(address) 	? "127.0.0.1" 	: address,
 						Database 		= string.IsNullOrWhiteSpace(dbName) 	? "database" 	: dbName,
-						UserID 			= string.IsNullOrWhiteSpace(username) 	? "user" 		: username,
+						UserID 			= string.IsNullOrWhiteSpace(username) 	? "root" 		: username,
 						Password 		= string.IsNullOrWhiteSpace(password) 	? "password" 	: password,
 						Port 			= port,
 						CharacterSet 	= string.IsNullOrWhiteSpace(charset) 	? "utf8mb4" 	: charset

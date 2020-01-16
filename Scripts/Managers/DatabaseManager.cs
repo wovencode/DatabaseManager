@@ -80,7 +80,9 @@ namespace wovencode
 				this.InvokeInstanceDevExtMethods("DeleteData", user.name);
 			
 			if (users.Count > 0)
-				debug.Log("[Database] Deleted " + users.Count + " user(s)");
+				debug.Log("[Database] Pruned " + users.Count + " inactive user(s)");
+#else
+			debug.LogWarning("[Database] No users could be pruned (Define #wPLAYER missing)");
 #endif
 			
 			this.InvokeInstanceDevExtMethods(nameof(DeleteUsers));
@@ -129,6 +131,8 @@ namespace wovencode
 				add your own code right here if preferred.
 			
 			*/
+			
+			debug.LogWarning("[Database] No players could be saved (Define #NETWORK missing)");
 			
 #endif
 
