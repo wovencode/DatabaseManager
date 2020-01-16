@@ -88,23 +88,22 @@ namespace wovencode
 		}
 		
 		// -------------------------------------------------------------------------------
+		// LogoutUser
+		// @NetworkManager
+		// -------------------------------------------------------------------------------
+		public void LogoutUser(string name)
+		{
+			SaveDataUser(name, false);
+			this.InvokeInstanceDevExtMethods(nameof(LogoutUser), name);
+		}
+		
+		// -------------------------------------------------------------------------------
 		// LoginPlayer
 		// @NetworkManager
 		// -------------------------------------------------------------------------------
 		public void LoginPlayer(string name)
 		{
-			PlayerSetOnline(name);
 			this.InvokeInstanceDevExtMethods(nameof(LoginPlayer), name);
-		}
-		
-		// -------------------------------------------------------------------------------
-		// LogoutUser
-		// @NetworkManager
-		// -------------------------------------------------------------------------------
-		public void LogoutUser(string username)
-		{
-			SaveDataUser(username, false);
-			this.InvokeInstanceDevExtMethods(nameof(LogoutUser), username);
 		}
 		
 		// -------------------------------------------------------------------------------
