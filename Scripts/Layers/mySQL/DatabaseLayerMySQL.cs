@@ -8,10 +8,12 @@ using wovencode;
 using UnityEngine;
 using System;
 using System.Net;
+using System.Linq;
 using System.Collections.Generic;
 using System.IO;
 using MySql.Data;
 using MySql.Data.MySqlClient;
+using SQLite;
 
 namespace wovencode
 {
@@ -60,11 +62,33 @@ namespace wovencode
 		}
 		
 		// -------------------------------------------------------------------------------
-		// 
+		// CreateTable
 		// -------------------------------------------------------------------------------
 		public override void CreateTable<T>()
 		{
-		
+			TableMap tableMap = GetTableMapFromType<T>();
+			string tableName = GetTableNameFromType<T>();
+			
+			string tableParameters = "";
+			
+			foreach (TableRow row in tableMap.rows)
+			{
+			
+				tableParameters += row.ToString;
+				tableParameters += " NOT NULL";
+				
+				if (row != tableMap.rows.Last())
+					tableParameters += ",";
+					
+			}
+			
+			string queryString = "CREATE TABLE IF NOT EXISTS "+tableName+"("+tableParameters+") CHARACTER SET="+charset;
+			
+			// PRIMARY KEY (),
+			// INDEX(),
+			
+			ExecuteNonQuery(connection, null, queryString);
+			
 		}
 		
 		// -------------------------------------------------------------------------------
@@ -104,6 +128,19 @@ namespace wovencode
 		// -------------------------------------------------------------------------------
 		public override void Insert(object obj)
 		{
+
+			if (obj == null)
+				return;
+			
+			TableMap tableMap = GetTableMapFromObject(obj);
+			string tableName = GetTableNameFromObject(obj);
+			
+			
+						
+			
+			//ExecuteNonQuery(connection, "INSERT INTO tableName ()", parameters);
+		
+		
 		}
 		
 		// -------------------------------------------------------------------------------
@@ -112,10 +149,20 @@ namespace wovencode
 		public override void InsertOrReplace(object obj)
 		{
 		
+			if (obj == null)
+				return;
+			
+			TableMap tableMap = GetTableMapFromObject(obj);
+			string tableName = GetTableNameFromObject(obj);
+			
+			
+			
+			//ExecuteNonQuery(connection, "INSERT OR REPLACE INTO tableName ()", parameters);
+		
 		}
 		
 		// -------------------------------------------------------------------------------
-		// 
+		// BeginTransaction
 		// -------------------------------------------------------------------------------
 		public override void BeginTransaction()
 		{
@@ -123,7 +170,7 @@ namespace wovencode
 		}
 		
 		// -------------------------------------------------------------------------------
-		// 
+		// Commit
 		// -------------------------------------------------------------------------------
 		public override void Commit()
 		{

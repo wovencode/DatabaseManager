@@ -86,6 +86,7 @@ namespace wovencode
 		public override void CreateTable<T>()
 		{
 			connection.CreateTable<T>();
+			GetTableMapFromType<T>(); //DEBUG
 		}
 		
 		// -------------------------------------------------------------------------------
