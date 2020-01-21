@@ -203,12 +203,15 @@ namespace Wovencode.Database {
 		// -------------------------------------------------------------------------------
 		public List<T> ToList<T>()
 		{
+
+			PropertyInfo[] pInfo;
+			pInfo = type.GetProperties();
+			
+			if (pInfo.Length == 0)
+				return null;
 			
 			List<T> list = new List<T>();
 			
-			PropertyInfo[] pInfo;
-			pInfo = type.GetProperties();
-		
 			for (int i = 0; i < pInfo.Length; i++)
 			{
 				T obj = (T)Activator.CreateInstance(typeof(T));

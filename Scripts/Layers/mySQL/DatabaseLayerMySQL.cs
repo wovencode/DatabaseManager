@@ -65,7 +65,8 @@ namespace Wovencode.Database
 		// -------------------------------------------------------------------------------
 		public override void CloseConnection()
 		{
-			connection.Close();
+			if (connection != null)
+				connection.Close();
 		}
 		
 		// -------------------------------------------------------------------------------
@@ -82,18 +83,33 @@ namespace Wovencode.Database
 			
 			string queryString = "CREATE TABLE IF NOT EXISTS "+tableMap.name+"("+tableMap.RowsToMySQLInsertString+primaryKeyString+") CHARACTER SET="+charset;
 			
-			// INDEX(),
-			
 			ExecuteNonQuery(connection, null, queryString);
 			
 		}
 		
 		// -------------------------------------------------------------------------------
-		// 
+		// CreateIndex
 		// -------------------------------------------------------------------------------
 		public override void CreateIndex(string tableName, string[] columnNames, bool unique = false)
 		{
-			// TODO: Implement
+			
+			string indexName = tableName + "_" + string.Join ("_", columnNames);
+			
+			if (ExecuteScalar(connection, null, "SELECT COUNT(1) "+indexName+" FROM "+tableName) == null)
+			{
+				string isUnique = unique ? "UNIQUE" : "";
+				string queryString = "CREATE INDEX "+indexName+" "+isUnique+" ON "+tableName+" ("+string.Join (",", columnNames)+")";
+				ExecuteNonQuery(connection, null, queryString);
+			}
+			
+		}
+		
+		// -------------------------------------------------------------------------------
+		// Execute
+		// -------------------------------------------------------------------------------
+		public override void Execute(string query, params object[] args)
+		{
+			ExecuteNonQuery(connection, null, dbCompat.GetConvertedQuery(query), dbCompat.GetConvertedParameters(args));
 		}
 		
 		// -------------------------------------------------------------------------------
@@ -106,22 +122,17 @@ namespace Wovencode.Database
 		}
 		
 		// -------------------------------------------------------------------------------
-		// Execute
-		// -------------------------------------------------------------------------------
-		public override void Execute(string query, params object[] args)
-		{
-			ExecuteNonQuery(connection, null, dbCompat.GetConvertedQuery(query), dbCompat.GetConvertedParameters(args));
-		}
-		
-		// -------------------------------------------------------------------------------
 		// FindWithQuery
 		// -------------------------------------------------------------------------------
 		public override T FindWithQuery<T>(string query, params object[] args)
 		{
-			Debug.Log("----------");
-			Debug.Log(Query<T>(query, args).FirstOrDefault());
-			Debug.Log("----------");
-			return Query<T>(query, args).FirstOrDefault();
+			List<T> list = Query<T>(query, args);
+			
+			if (list == null)
+				return default(T);
+			
+			return list.FirstOrDefault();
+			
 		}
 		
 		// -------------------------------------------------------------------------------

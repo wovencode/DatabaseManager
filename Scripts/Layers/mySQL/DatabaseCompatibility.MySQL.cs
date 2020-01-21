@@ -13,6 +13,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using MySql.Data;
 using MySql.Data.MySqlClient;
+using UnityEngine;
 
 namespace Wovencode.Database
 {
@@ -126,6 +127,9 @@ namespace Wovencode.Database
 		public List<T> ConvertReader<T>(MySQLRowsReader reader)
 		{
 
+			if (reader.RowCount == 0)
+				return null;
+			
 			TableMap map = GetTableMap<T>();
 			
 			while (reader.Read())

@@ -14,6 +14,7 @@ Features
 * Supports both SQLite and mySQL out of the box.
 * Hot-swap-able (data content is not transferred).
 * Abstraction Layer allows ingetration of additional database systems.
+* MiniORM - allows SQLite and mySQL to use same syntax  (= write code only once).
 
 Installation
 ---
