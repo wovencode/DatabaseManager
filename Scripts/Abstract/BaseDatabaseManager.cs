@@ -4,11 +4,12 @@
 // MIT licensed
 // =======================================================================================
 
-using wovencode;
+using Wovencode;
+using Wovencode.Database;
 using UnityEngine;
 using System;
 
-namespace wovencode
+namespace Wovencode.Database
 {
 	
 	// ===================================================================================
@@ -29,7 +30,7 @@ namespace wovencode
 		}
 		
 		// -------------------------------------------------------------------------------
-		public virtual bool TryUserRegister(string name, string password)
+		public virtual bool TryUserRegister(string name, string password, string email)
 		{
 			return (Tools.IsAllowedName(name) && Tools.IsAllowedPassword(password));
 		}
@@ -78,37 +79,37 @@ namespace wovencode
 		// -------------------------------------------------------------------------------
 		public virtual bool TryPlayerLogin(string name, string username)
 		{
-			return (Tools.IsAllowedName(name) && Tools.IsAllowedPassword(username));
+			return (Tools.IsAllowedName(name) && Tools.IsAllowedName(username));
 		}
 		
 		// -------------------------------------------------------------------------------
 		public virtual bool TryPlayerRegister(string name, string username)
 		{
-			return (Tools.IsAllowedName(name) && Tools.IsAllowedPassword(username));
+			return (Tools.IsAllowedName(name) && Tools.IsAllowedName(username));
 		}
 		
 		// -------------------------------------------------------------------------------
-		public virtual bool TryPlayerDeleteSoft(string name, string username, int _action=1)
+		public virtual bool TryPlayerDeleteSoft(string name, string username, int action=1)
 		{
-			return (Tools.IsAllowedName(name) && Tools.IsAllowedPassword(username));
+			return (Tools.IsAllowedName(name) && Tools.IsAllowedName(username));
 		}
 		
 		// -------------------------------------------------------------------------------
-		public virtual bool TryPlayerDeleteHard(string name)
+		public virtual bool TryPlayerDeleteHard(string name, string username)
 		{
-			return (Tools.IsAllowedName(name));
+			return (Tools.IsAllowedName(name) && Tools.IsAllowedName(username));
 		}
 		
 		// -------------------------------------------------------------------------------
-		public virtual bool TryPlayerBan(string name, string username, int _action=1)
+		public virtual bool TryPlayerBan(string name, string username, int action=1)
 		{
-			return (Tools.IsAllowedName(name) && Tools.IsAllowedPassword(username));
+			return (Tools.IsAllowedName(name) && Tools.IsAllowedName(username));
 		}
 		
 		// -------------------------------------------------------------------------------
-		public virtual bool TryPlayerSwitchServer(string name, int _token)
+		public virtual bool TryPlayerSwitchServer(string name, int token)
 		{
-			return (Tools.IsAllowedName(name) && Tools.IsAllowedToken(_token));
+			return (Tools.IsAllowedName(name) && Tools.IsAllowedToken(token));
 		}
 		
 		// -------------------------------------------------------------------------------

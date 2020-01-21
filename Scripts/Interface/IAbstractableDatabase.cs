@@ -9,9 +9,10 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using wovencode;
+using Wovencode;
+using Wovencode.Database;
 
-namespace wovencode
+namespace Wovencode.Database
 {
 	// ===================================================================================
 	// IAbstractableDatabase

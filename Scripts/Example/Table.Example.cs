@@ -4,11 +4,12 @@
 // MIT licensed
 // =======================================================================================
 
-using wovencode;
+using Wovencode;
+using Wovencode.Database;
 using System;
 using SQLite;
 
-namespace wovencode
+namespace Wovencode.Database
 {
 
 	// ===================================================================================

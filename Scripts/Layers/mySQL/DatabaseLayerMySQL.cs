@@ -4,7 +4,8 @@
 // MIT licensed
 // =======================================================================================
 
-using wovencode;
+using Wovencode;
+using Wovencode.Database;
 using UnityEngine;
 using System;
 using System.Net;
@@ -15,7 +16,7 @@ using MySql.Data;
 using MySql.Data.MySqlClient;
 using SQLite;
 
-namespace wovencode
+namespace Wovencode.Database
 {
 	
 	// ===================================================================================
@@ -36,6 +37,8 @@ namespace wovencode
 		protected MySqlConnection connection = null;
 		protected string connectionString = null;
 		
+		protected DatabaseCompatibility dbCompat = new DatabaseCompatibility();
+		
 		// ================================ API METHODS ==================================
 		
 		// -------------------------------------------------------------------------------
@@ -50,6 +53,10 @@ namespace wovencode
 		// -------------------------------------------------------------------------------
 		public override void OpenConnection()
 		{
+			
+			if (connection == null)
+				connection = NewConnection();
+				
 			connection.Open();
 		}
 		
@@ -66,25 +73,15 @@ namespace wovencode
 		// -------------------------------------------------------------------------------
 		public override void CreateTable<T>()
 		{
-			TableMap tableMap = GetTableMapFromType<T>();
-			string tableName = GetTableNameFromType<T>();
+			TableMap tableMap = dbCompat.GetTableMap<T>();
 			
-			string tableParameters = "";
+			string primaryKeyString = "";
 			
-			foreach (TableRow row in tableMap.rows)
-			{
+			if (tableMap.HasPrimaryKey)
+				primaryKeyString = ", PRIMARY KEY (`"+tableMap.GetPrimaryKey+"`)";
 			
-				tableParameters += row.ToString;
-				tableParameters += " NOT NULL";
-				
-				if (row != tableMap.rows.Last())
-					tableParameters += ",";
-					
-			}
+			string queryString = "CREATE TABLE IF NOT EXISTS "+tableMap.name+"("+tableMap.RowsToMySQLInsertString+primaryKeyString+") CHARACTER SET="+charset;
 			
-			string queryString = "CREATE TABLE IF NOT EXISTS "+tableName+"("+tableParameters+") CHARACTER SET="+charset;
-			
-			// PRIMARY KEY (),
 			// INDEX(),
 			
 			ExecuteNonQuery(connection, null, queryString);
@@ -96,35 +93,39 @@ namespace wovencode
 		// -------------------------------------------------------------------------------
 		public override void CreateIndex(string tableName, string[] columnNames, bool unique = false)
 		{
-		
+			// TODO: Implement
 		}
 		
 		// -------------------------------------------------------------------------------
-		// 
+		// Query
 		// -------------------------------------------------------------------------------
 		public override List<T> Query<T>(string query, params object[] args)
 		{
-			return null;
+			MySQLRowsReader reader = ExecuteReader(connection, null, dbCompat.GetConvertedQuery(query), dbCompat.GetConvertedParameters(args));
+			return dbCompat.ConvertReader<T>(reader);
 		}
 		
 		// -------------------------------------------------------------------------------
-		// 
+		// Execute
 		// -------------------------------------------------------------------------------
 		public override void Execute(string query, params object[] args)
 		{
-		
+			ExecuteNonQuery(connection, null, dbCompat.GetConvertedQuery(query), dbCompat.GetConvertedParameters(args));
 		}
 		
 		// -------------------------------------------------------------------------------
-		// 
+		// FindWithQuery
 		// -------------------------------------------------------------------------------
 		public override T FindWithQuery<T>(string query, params object[] args)
 		{
-			return new T{};
+			Debug.Log("----------");
+			Debug.Log(Query<T>(query, args).FirstOrDefault());
+			Debug.Log("----------");
+			return Query<T>(query, args).FirstOrDefault();
 		}
 		
 		// -------------------------------------------------------------------------------
-		// 
+		// Insert
 		// -------------------------------------------------------------------------------
 		public override void Insert(object obj)
 		{
@@ -132,19 +133,16 @@ namespace wovencode
 			if (obj == null)
 				return;
 			
-			TableMap tableMap = GetTableMapFromObject(obj);
-			string tableName = GetTableNameFromObject(obj);
+			TableMap tableMap = dbCompat.GetTableMap(obj);
 			
+			string queryString = "INSERT INTO "+tableMap.name+" ("+tableMap.RowsToMySQLString()+") VALUES("+tableMap.RowsToMySQLString("@")+")";
 			
-						
-			
-			//ExecuteNonQuery(connection, "INSERT INTO tableName ()", parameters);
-		
+			ExecuteNonQuery(connection,null,  queryString, tableMap.RowsToMySQLParameters);
 		
 		}
 		
 		// -------------------------------------------------------------------------------
-		// 
+		// InsertOrReplace
 		// -------------------------------------------------------------------------------
 		public override void InsertOrReplace(object obj)
 		{
@@ -152,12 +150,11 @@ namespace wovencode
 			if (obj == null)
 				return;
 			
-			TableMap tableMap = GetTableMapFromObject(obj);
-			string tableName = GetTableNameFromObject(obj);
+			TableMap tableMap = dbCompat.GetTableMap(obj);
 			
+			string queryString = "INSERT OR REPLACE INTO "+tableMap.name+" ("+tableMap.RowsToMySQLString()+") VALUES("+tableMap.RowsToMySQLString("@")+")";
 			
-			
-			//ExecuteNonQuery(connection, "INSERT OR REPLACE INTO tableName ()", parameters);
+			ExecuteNonQuery(connection,null,  queryString, tableMap.RowsToMySQLParameters);
 		
 		}
 		
@@ -406,7 +403,7 @@ namespace wovencode
                 connection.Close();
             return result;
         }
-		
+        
 		// -------------------------------------------------------------------------------
 
 	}

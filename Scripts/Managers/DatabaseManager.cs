@@ -4,14 +4,15 @@
 // MIT licensed
 // =======================================================================================
 
-using wovencode;
+using Wovencode;
+using Wovencode.Database;
 using UnityEngine;
 using System;
 using System.IO;
 using System.Collections.Generic;
 using SQLite;
 
-namespace wovencode
+namespace Wovencode.Database
 {
 	
 	// ===================================================================================
@@ -110,18 +111,18 @@ namespace wovencode
 				replace the code below with your own.
 			*/
 			
-    		if (wovencode.NetworkManager.onlinePlayers.Count == 0)
+    		if (Wovencode.Network.NetworkManager.onlinePlayers.Count == 0)
     			return; 
     		
         	databaseLayer.BeginTransaction();
         	
-        	foreach (GameObject player in wovencode.NetworkManager.onlinePlayers.Values)
+        	foreach (GameObject player in Wovencode.Network.NetworkManager.onlinePlayers.Values)
             	SaveDataPlayer(player, online, false);
             
         	databaseLayer.Commit();
         	
-        	if (wovencode.NetworkManager.onlinePlayers.Count > 0)
-        		debug.Log("[Database] Saved " + wovencode.NetworkManager.onlinePlayers.Count + " player(s)");
+        	if (Wovencode.Network.NetworkManager.onlinePlayers.Count > 0)
+        		debug.Log("[Database] Saved " + Wovencode.Network.NetworkManager.onlinePlayers.Count + " player(s)");
 #else
 			
 			/*

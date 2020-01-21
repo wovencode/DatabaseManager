@@ -4,14 +4,15 @@
 // MIT licensed
 // =======================================================================================
 
-using wovencode;
+using Wovencode;
+using Wovencode.Database;
 using UnityEngine;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using SQLite;
 
-namespace wovencode
+namespace Wovencode.Database
 {
 	
 	// ===================================================================================
@@ -86,7 +87,6 @@ namespace wovencode
 		public override void CreateTable<T>()
 		{
 			connection.CreateTable<T>();
-			GetTableMapFromType<T>(); //DEBUG
 		}
 		
 		// -------------------------------------------------------------------------------

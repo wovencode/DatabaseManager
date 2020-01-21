@@ -7,9 +7,10 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using wovencode;
+using Wovencode;
+using Wovencode.Database;
 
-namespace wovencode
+namespace Wovencode.Database
 {
 
 	// ===================================================================================
@@ -20,7 +21,7 @@ namespace wovencode
 		
 		// ---- User
 		bool TryUserLogin(string name, string password);
-		bool TryUserRegister(string name, string password);
+		bool TryUserRegister(string name, string password, string email);
 		bool TryUserDelete(string name, string password, int action=1);
 		bool TryUserBan(string name, string password, int action=1);
 		bool TryUserChangePassword(string name, string oldpassword, string newpassword);
@@ -30,11 +31,11 @@ namespace wovencode
 		int TryUserGetPlayerCount(string name);
 		
 		// ---- Player
-		bool TryPlayerLogin(string name, string _username);
-		bool TryPlayerRegister(string name, string _username);
-		bool TryPlayerDeleteSoft(string name, string _username, int action=1);
-		bool TryPlayerDeleteHard(string name);
-		bool TryPlayerBan(string name, string _username, int action=1);
+		bool TryPlayerLogin(string name, string username);
+		bool TryPlayerRegister(string name, string username);
+		bool TryPlayerDeleteSoft(string name, string username, int action=1);
+		bool TryPlayerDeleteHard(string name, string username);
+		bool TryPlayerBan(string name, string username, int action=1);
 		bool TryPlayerSwitchServer(string name, int _token=0);
 		
 	}

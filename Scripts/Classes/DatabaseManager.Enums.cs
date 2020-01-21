@@ -7,9 +7,10 @@
 using System;
 using System.Text;
 using UnityEngine;
-using wovencode;
+using Wovencode;
+using Wovencode.Database;
 
-namespace wovencode {
+namespace Wovencode.Database {
 
 	public enum DatabaseType {SQLite, mySQL}
 		
