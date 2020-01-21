@@ -24,26 +24,26 @@ namespace Wovencode.Database
 		// ============================= PUBLIC METHODS ==================================
 		
     	// -------------------------------------------------------------------------------
-		// CreateDefaultData
+		// CreateDefaultDataPlayer
 		// called when a new player is registered, the hook is executed on all modules and
 		// used to parse default data onto the player (like starting Equipment etc.).
 		// -------------------------------------------------------------------------------
-		public void CreateDefaultData(GameObject player)
+		public void CreateDefaultDataPlayer(GameObject player)
 		{
-			this.InvokeInstanceDevExtMethods(nameof(CreateDefaultData), player);
+			this.InvokeInstanceDevExtMethods(nameof(CreateDefaultDataPlayer), player);
 		}
 		
 		// -------------------------------------------------------------------------------
-		// LoadData
+		// LoadDataPlayer
 		// called when a player is loaded from the database, the hooks are executed on
 		// all modules and used to load additional player data.
 		// -------------------------------------------------------------------------------
-		public GameObject LoadData(GameObject prefab, string _name)
+		public GameObject LoadDataPlayer(GameObject prefab, string _name)
 		{
 			GameObject player = Instantiate(prefab);
 			player.name = _name;
-			this.InvokeInstanceDevExtMethods("LoadDataWithPriority", player);
-			this.InvokeInstanceDevExtMethods(nameof(LoadData), player);
+			this.InvokeInstanceDevExtMethods("LoadDataPlayerPriority", player);
+			this.InvokeInstanceDevExtMethods(nameof(LoadDataPlayer), player);
 			return player;
 		}
 		

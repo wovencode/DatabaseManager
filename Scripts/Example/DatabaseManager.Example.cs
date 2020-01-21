@@ -32,10 +32,10 @@ namespace Wovencode.Database
 		}
 		
 		// -------------------------------------------------------------------------------
-		// CreateDefaultData
+		// CreateDefaultDataPlayer
 		// -------------------------------------------------------------------------------
-		[DevExtMethods("CreateDefaultData")]
-		void CreateDefaultData_Example(GameObject player)
+		[DevExtMethods("CreateDefaultDataPlayer")]
+		void CreateDefaultDataPlayer_Example(GameObject player)
 		{
 	 		/*
 	 			Fills the table with default data (if any)
@@ -44,14 +44,13 @@ namespace Wovencode.Database
 	 			No need to save them in the database right away
 	 			As the playerSaving or next saveInterval will take care of it
 	 		*/
-	 		
 		}
 		
 		// -------------------------------------------------------------------------------
-		// LoadDataWithPriority
+		// LoadDataPlayerPriority
 		// -------------------------------------------------------------------------------
-		[DevExtMethods("LoadDataWithPriority")]
-		void LoadDataWithPriority_Example(GameObject player)
+		[DevExtMethods("LoadDataPlayerPriority")]
+		void LoadDataPlayerPriority_Example(GameObject player)
 		{
 	   		/*
 	   			The difference to "LoadData" is, that "LoadDataWithPriority" is executed
@@ -62,10 +61,10 @@ namespace Wovencode.Database
 		}
 		
 		// -------------------------------------------------------------------------------
-		// LoadData
+		// LoadDataPlayer_Example
 		// -------------------------------------------------------------------------------
-		[DevExtMethods("LoadData")]
-		void LoadData_Example(GameObject player)
+		[DevExtMethods("LoadDataPlayer")]
+		void LoadDataPlayer_Example(GameObject player)
 		{
 			
 			/*
@@ -91,14 +90,14 @@ namespace Wovencode.Database
 		}
 		
 		// -------------------------------------------------------------------------------
-		// SaveData
+		// SaveDataPlayer_Example
 		// -------------------------------------------------------------------------------
-		[DevExtMethods("SaveData")]
-		void SaveData_Example(GameObject player)
+		[DevExtMethods("SaveDataPlayer")]
+		void SaveDataPlayer_Example(GameObject player, bool isOnline)
 		{
 		
 			// you should delete all data of this player first, to prevent duplicates
-	   		DeleteData_Example(player.name);
+	   		DeleteDataPlayer_Example(player.name);
 	   		
 	   		/*
 	   			This function saves any kind of data from your player object to the
@@ -129,10 +128,10 @@ namespace Wovencode.Database
 		}
 	   	
 	   	// -------------------------------------------------------------------------------
-	   	// DeleteData_Example
+	   	// DeleteDataPlayer_Example
 	   	// -------------------------------------------------------------------------------
-	   	[DevExtMethods("DeleteData")]
-	   	void DeleteData_Example(string _name)
+	   	[DevExtMethods("DeleteDataPlayer")]
+	   	void DeleteDataPlayer_Example(string _name)
 	   	{
 	   		Execute("DELETE FROM TableExample WHERE owner=?", _name);
 	   	}
