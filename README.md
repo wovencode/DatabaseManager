@@ -39,10 +39,13 @@ Contains Open-Source Code
 * mySQL dll
 * insthync/UnityMultiplayerARPG_MMO (https://github.com/insthync/UnityMultiplayerARPG_MMO)
 
-Documentation
+Namespace
 ---
-None for now.
+* Wovencode.Database
 
-Support
+Compatibility
 ---
-None for now.
+* Unity3d 2018-2019 (inclusive)
+* Client: Windows, MacOS, Android, iOS, Linux
+* Server: Windows, MacOs, Linux
+* Single-Player: Windows, MacOS, Android, iOS, Linux

@@ -30,7 +30,7 @@ namespace Wovencode.Database
 		}
 		
 		// -------------------------------------------------------------------------------
-		public virtual bool TryUserRegister(string name, string password, string email)
+		public virtual bool TryUserRegister(string name, string password, string email, string deviceid)
 		{
 			return (Tools.IsAllowedName(name) && Tools.IsAllowedPassword(password));
 		}

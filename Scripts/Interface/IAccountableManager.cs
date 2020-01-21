@@ -21,7 +21,7 @@ namespace Wovencode.Database
 		
 		// ---- User
 		bool TryUserLogin(string name, string password);
-		bool TryUserRegister(string name, string password, string email);
+		bool TryUserRegister(string name, string password, string email, string deviceid);
 		bool TryUserDelete(string name, string password, int action=1);
 		bool TryUserBan(string name, string password, int action=1);
 		bool TryUserChangePassword(string name, string oldpassword, string newpassword);
