@@ -36,25 +36,25 @@ namespace Wovencode.Database
 		}
 		
 		// -------------------------------------------------------------------------------
-		public virtual bool TryUserDelete(string name, string password, int _action=1)
+		public virtual bool TryUserDelete(string name, string password, int action=1)
 		{
 			return (Tools.IsAllowedName(name) && Tools.IsAllowedPassword(password));
 		}
 		
 		// -------------------------------------------------------------------------------
-		public virtual bool TryUserBan(string name, string password, int _action=1)
+		public virtual bool TryUserBan(string name, string password, int action=1)
 		{
 			return (Tools.IsAllowedName(name) && Tools.IsAllowedPassword(password));
 		}
 		
 		// -------------------------------------------------------------------------------
-		public virtual bool TryUserChangePassword(string name, string oldpassword, string newpassword)
+		public virtual bool TryUserChangePassword(string name, string oldPassword, string newPassword)
 		{
-			return (Tools.IsAllowedName(name) && Tools.IsAllowedPassword(oldpassword) && Tools.IsAllowedPassword(newpassword) && oldpassword != newpassword);
+			return (Tools.IsAllowedName(name) && Tools.IsAllowedPassword(oldPassword) && Tools.IsAllowedPassword(newPassword) && oldPassword != newPassword);
 		}
 		
 		// -------------------------------------------------------------------------------
-		public virtual bool TryUserConfirm(string name, string password, int _action=1)
+		public virtual bool TryUserConfirm(string name, string password, int action=1)
 		{
 			return (Tools.IsAllowedName(name) && Tools.IsAllowedPassword(password));
 		}

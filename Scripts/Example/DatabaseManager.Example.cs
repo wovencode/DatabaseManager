@@ -133,7 +133,7 @@ namespace Wovencode.Database
 	   	[DevExtMethods("DeleteDataPlayer")]
 	   	void DeleteDataPlayer_Example(string _name)
 	   	{
-	   		Execute("DELETE FROM TableExample WHERE owner=?", _name);
+	   		Execute("DELETE FROM "+nameof(TableExample)+" WHERE owner=?", _name);
 	   	}
 	   	
 		// -------------------------------------------------------------------------------

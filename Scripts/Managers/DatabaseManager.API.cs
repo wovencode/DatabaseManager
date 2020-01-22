@@ -73,6 +73,7 @@ namespace Wovencode.Database
 		public void OpenConnection()
 		{
 			databaseLayer.OpenConnection();
+			debug.Log("[DatabaseManager] OpenConnection");
 		}
 		
 		// -------------------------------------------------------------------------------
@@ -81,6 +82,7 @@ namespace Wovencode.Database
 		public void CloseConnection()
 		{
 			databaseLayer.CloseConnection();
+			debug.Log("[DatabaseManager] CloseConnection");
 		}
 		
 		// -------------------------------------------------------------------------------
@@ -89,6 +91,7 @@ namespace Wovencode.Database
 		public void CreateTable<T>()
 		{
 			databaseLayer.CreateTable<T>();
+			debug.Log("[DatabaseManager] CreateTable: "+typeof(T));
 		}
 		
 		// -------------------------------------------------------------------------------
@@ -97,6 +100,7 @@ namespace Wovencode.Database
 		public void CreateIndex(string tableName, string[] columnNames, bool unique = false)
 		{
 			databaseLayer.CreateIndex(tableName, columnNames, unique);
+			debug.Log("[DatabaseManager] CreateIndex: "+tableName + " ("+string.Join ("_", columnNames)+")");
 		}
 		
 		// -------------------------------------------------------------------------------
@@ -104,6 +108,7 @@ namespace Wovencode.Database
 		// -------------------------------------------------------------------------------
 		public List<T> Query<T>(string query, params object[] args) where T : new()
 		{
+			debug.Log("[DatabaseManager] Query: "+typeof(T)+ "("+query+")");
 			return databaseLayer.Query<T>(query, args);
 		}
 		
@@ -113,6 +118,7 @@ namespace Wovencode.Database
 		public void Execute(string query, params object[] args)
 		{
 			databaseLayer.Execute(query, args);
+			debug.Log("[DatabaseManager] Execute: "+query);
 		}
 		
 		// -------------------------------------------------------------------------------
@@ -120,6 +126,7 @@ namespace Wovencode.Database
 		// -------------------------------------------------------------------------------
 		public T FindWithQuery<T>(string query, params object[] args) where T : new()
 		{
+			debug.Log("[DatabaseManager] FindWithQuery: "+typeof(T)+" ("+query+")");
 			return databaseLayer.FindWithQuery<T>(query, args);
 		}
 		
@@ -129,6 +136,7 @@ namespace Wovencode.Database
 		public void Insert(object obj)
 		{
 			databaseLayer.Insert(obj);
+			debug.Log("[DatabaseManager] Insert: "+obj);
 		}
 		
 		// -------------------------------------------------------------------------------
@@ -137,6 +145,7 @@ namespace Wovencode.Database
 		public void InsertOrReplace(object obj)
 		{
 			databaseLayer.InsertOrReplace(obj);
+			debug.Log("[DatabaseManager] InsertOrReplace: "+obj);
 		}
 		
 		// -------------------------------------------------------------------------------
@@ -145,6 +154,7 @@ namespace Wovencode.Database
 		public void BeginTransaction()
 		{
 			databaseLayer.BeginTransaction();
+			debug.Log("[DatabaseManager] BeginTransaction");
 		}
 		
 		// -------------------------------------------------------------------------------
@@ -153,6 +163,7 @@ namespace Wovencode.Database
 		public void Commit()
 		{
 			databaseLayer.Commit();
+			debug.Log("[DatabaseManager] Commit");
 		}
 		
 		// -------------------------------------------------------------------------------

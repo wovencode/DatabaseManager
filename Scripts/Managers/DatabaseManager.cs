@@ -75,7 +75,7 @@ namespace Wovencode.Database
 		void DeleteUsers()
 		{
 #if wPLAYER	
-			List<TableUser> users = Query<TableUser>("SELECT * FROM TableUser WHERE deleted=1");
+			List<TableUser> users = Query<TableUser>("SELECT * FROM "+nameof(TableUser)+" WHERE deleted=1");
 
 			foreach (TableUser user in users)
 				this.InvokeInstanceDevExtMethods("DeleteDataPlayerUser", user.name);
