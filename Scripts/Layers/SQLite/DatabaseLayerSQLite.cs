@@ -6,6 +6,7 @@
 
 using Wovencode;
 using Wovencode.Database;
+using Wovencode.Debug;
 using UnityEngine;
 using System;
 using System.Collections.Generic;
@@ -59,7 +60,7 @@ namespace Wovencode.Database
 				checkIntegrity &&
 				Tools.GetChecksum(_dbPath) == false)
 			{
-				Debug.LogWarning("[DatabaseManager] Database file is corrupted!");
+				debug.LogWarning("[DatabaseManager] Database file is corrupted!");
 				// deletes the file, a fresh database file is re-created thereafter
 				File.Delete(_dbPath);
 			}
