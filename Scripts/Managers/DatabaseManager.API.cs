@@ -6,6 +6,7 @@
 
 using Wovencode;
 using Wovencode.Database;
+using Wovencode.Debugging;
 using UnityEngine;
 using System;
 using System.IO;
@@ -135,8 +136,11 @@ namespace Wovencode.Database
 		// -------------------------------------------------------------------------------
 		public void Insert(object obj)
 		{
+			debug.StartProfile("Insert");
 			databaseLayer.Insert(obj);
+			debug.StopProfile("Insert");
 			debug.Log("[DatabaseManager] Insert: "+obj);
+			debug.PrintProfile("Insert");
 		}
 		
 		// -------------------------------------------------------------------------------

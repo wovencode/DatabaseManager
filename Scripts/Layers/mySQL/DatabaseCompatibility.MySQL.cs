@@ -66,7 +66,6 @@ namespace Wovencode.Database
 				return tableMap;
 			}
 			
-			
 			TableMap newTableMap = BuildTableMapFromObject(obj);
 			
 			tableMaps.Add(tableName.GetDeterministicHashCode(), newTableMap);
@@ -130,10 +129,13 @@ namespace Wovencode.Database
 			if (reader.RowCount == 0)
 				return null;
 			
-			TableMap map = GetTableMap<T>();
+			List<T> results = new List<T>();
 			
 			while (reader.Read())
 			{
+				
+				TableMap map = GetTableMap<T>();
+				
 				for (int i = 0; i < map.rows.Length; i++)
 				{
 					
@@ -163,9 +165,11 @@ namespace Wovencode.Database
 					map.UpdateValue(obj);
 					
 				}
+				
+				results.Add(map.ToType<T>());
 			}
 			
-			return map.ToList<T>();
+			return results;
 			
 		}
 				

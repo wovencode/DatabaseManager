@@ -6,7 +6,7 @@
 
 using Wovencode;
 using Wovencode.Database;
-using Wovencode.Debug;
+using Wovencode.Debugging;
 using UnityEngine;
 using System;
 

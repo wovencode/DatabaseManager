@@ -12,6 +12,7 @@ using MySql.Data;
 using MySql.Data.MySqlClient;
 using Wovencode;
 using Wovencode.Database;
+using Wovencode.Debugging;
 
 namespace Wovencode.Database {
 	
@@ -44,7 +45,6 @@ namespace Wovencode.Database {
 		// Caches
 		protected string mySQLString			= "";
 		protected string mySQLString_Prefixed 	= "";
-		protected MySqlParameter[] parameters;
 		
 		// -------------------------------------------------------------------------------
 		// TableMap (Constructor)
@@ -128,17 +128,11 @@ namespace Wovencode.Database {
 		{
 			get
 			{
-				if (parameters == null)
-				{
-					parameters = new MySqlParameter[rows.Length];
-					int i = 0;
-					
-					foreach (TableRow row in rows)
-					{
-						parameters[i] = new MySqlParameter("@"+row.name, row.value);
-						i++;
-					}
-				}
+				
+				MySqlParameter[] parameters = new MySqlParameter[rows.Length];
+				
+				for (int i = 0; i < rows.Length; i++)
+					parameters[i] = new MySqlParameter("@"+rows[i].name, rows[i].value);
 				
 				return parameters;
 				
@@ -177,10 +171,8 @@ namespace Wovencode.Database {
 		public void UpdateValue(object obj)
 		{
 			foreach (TableRow row in rows)
-			{
 				if (row.name == name)
 					row.value = obj;
-			}
 		}
 		
 		// -------------------------------------------------------------------------------
@@ -190,36 +182,28 @@ namespace Wovencode.Database {
 		{
 		
 			PropertyInfo[] pInfo;
-			Type t = obj.GetType();
-			pInfo = t.GetProperties();
+			pInfo = obj.GetType().GetProperties();
 			
 			for (int i = 0; i < pInfo.Length; i++)
 				rows[i].value = pInfo[i].GetValue(obj);
-			
+
 		}
 		
 		// -------------------------------------------------------------------------------
-		// ToList
+		// ToType
 		// -------------------------------------------------------------------------------
-		public List<T> ToList<T>()
+		public T ToType<T>()
 		{
-
-			PropertyInfo[] pInfo;
-			pInfo = type.GetProperties();
+		
+			T result = (T)Activator.CreateInstance(typeof(T));
+		
+			PropertyInfo[] pInfo0;
+			pInfo0 = result.GetType().GetProperties();
 			
-			if (pInfo.Length == 0)
-				return null;
-			
-			List<T> list = new List<T>();
-			
-			for (int i = 0; i < pInfo.Length; i++)
-			{
-				T obj = (T)Activator.CreateInstance(typeof(T));
-				pInfo[i].SetValue(obj, rows[i].value);
-				list.Add(obj);
-			}
-			
-			return list;
+			for (int i = 0; i < pInfo0.Length; i++)
+				pInfo0[i].SetValue(result, rows[i].value);
+				
+			return result;
 			
 		}
 		

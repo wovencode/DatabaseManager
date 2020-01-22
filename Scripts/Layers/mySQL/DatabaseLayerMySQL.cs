@@ -6,6 +6,7 @@
 
 using Wovencode;
 using Wovencode.Database;
+using Wovencode.Debugging;
 using UnityEngine;
 using System;
 using System.Net;
@@ -118,6 +119,7 @@ namespace Wovencode.Database
 		public override List<T> Query<T>(string query, params object[] args)
 		{
 			MySQLRowsReader reader = ExecuteReader(connection, null, dbCompat.GetConvertedQuery(query), dbCompat.GetConvertedParameters(args));
+			
 			return dbCompat.ConvertReader<T>(reader);
 		}
 		
@@ -147,7 +149,7 @@ namespace Wovencode.Database
 			TableMap tableMap = dbCompat.GetTableMap(obj);
 			
 			string queryString = "INSERT INTO "+tableMap.name+" ("+tableMap.RowsToMySQLString()+") VALUES("+tableMap.RowsToMySQLString("@")+")";
-			
+
 			ExecuteNonQuery(connection,null,  queryString, tableMap.RowsToMySQLParameters);
 		
 		}

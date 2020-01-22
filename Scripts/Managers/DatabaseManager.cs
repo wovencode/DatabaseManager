@@ -81,9 +81,9 @@ namespace Wovencode.Database
 				this.InvokeInstanceDevExtMethods("DeleteDataPlayerUser", user.name);
 			
 			if (users.Count > 0)
-				debug.Log("[Database] Pruned " + users.Count + " inactive user(s)");
+				debug.Log("[DatabaseManager] Pruned " + users.Count + " inactive user(s)");
 #else
-			debug.LogWarning("[Database] No users could be pruned (Define #wPLAYER missing)");
+			debug.LogWarning("[DatabaseManager] No users could be pruned (Define #wPLAYER missing)");
 #endif
 			
 			this.InvokeInstanceDevExtMethods(nameof(DeleteUsers));
