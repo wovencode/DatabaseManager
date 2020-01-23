@@ -12,7 +12,7 @@ using MySql.Data;
 using MySql.Data.MySqlClient;
 using Wovencode;
 using Wovencode.Database;
-using Wovencode.Debugging;
+using Wovencode.DebugManager;
 
 namespace Wovencode.Database {
 	

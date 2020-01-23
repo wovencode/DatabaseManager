@@ -17,7 +17,7 @@ namespace Wovencode.Database
 	// ===================================================================================
 	// IAbstractableDatabase
 	// ===================================================================================
-	public interface IAbstractableDatabase
+	public partial interface IAbstractableDatabase
 	{
 		void Init();
 		void OpenConnection();

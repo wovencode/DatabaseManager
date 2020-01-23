@@ -6,7 +6,10 @@
 
 using Wovencode;
 using Wovencode.Database;
-using Wovencode.Debugging;
+using Wovencode.DebugManager;
+#if wNETWORK
+using Wovencode.Network;
+#endif
 using UnityEngine;
 using System;
 using System.IO;
@@ -25,13 +28,19 @@ namespace Wovencode.Database
 		// -------------------------------------------------------------------------------
 		// Awake
 		// Sets the singleton on awake, database can be accessed from anywhere by using it
-		// also calls "Init" on databaseLayer to create database and open connection if
+		// also calls "Init" on database and the databaseLayer to create database and 
+		// open connection if
 		// that is required
 		// -------------------------------------------------------------------------------
-		public void Awake()
+		public override void Awake()
 		{
+			base.Awake(); // required
 			singleton = this;
-			databaseLayer.Init();
+
+#if _SERVER
+			Init();
+#endif
+
 		}
 		
 		// -------------------------------------------------------------------------------
@@ -43,6 +52,8 @@ namespace Wovencode.Database
 		{
 			
 			OpenConnection();
+			
+			databaseLayer.Init();
 			
 			this.InvokeInstanceDevExtMethods(nameof(Init));
 			
