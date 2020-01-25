@@ -93,9 +93,9 @@ namespace Wovencode.Database
 		}
 		
 		// -------------------------------------------------------------------------------
-		public virtual bool TryPlayerRegister(string name, string username)
+		public virtual bool TryPlayerRegister(string name, string username, string prefabname)
 		{
-			return (Tools.IsAllowedName(name) && Tools.IsAllowedName(username));
+			return (Tools.IsAllowedName(name) && Tools.IsAllowedName(username) && !String.IsNullOrWhiteSpace(prefabname));
 		}
 		
 		// -------------------------------------------------------------------------------

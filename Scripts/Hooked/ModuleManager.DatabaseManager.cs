@@ -31,7 +31,7 @@ namespace Wovencode.Modules
 			
 			module.name				= "DatabaseManager";
 			module.define			= "wDB";
-			module.version       	= "1.1";
+			module.version       	= "PreAlpha1";
 			module.unity3dVersion 	= "2018.x-2019.x";
 			module.nameSpace		= "Wovencode.Database";
         	module.package         	= "Wovencore";

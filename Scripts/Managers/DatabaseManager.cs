@@ -74,19 +74,21 @@ namespace Wovencode.Database
 		// -------------------------------------------------------------------------------
 		void DeleteUsers()
 		{
-#if wPLAYER	
-			List<TableUser> users = Query<TableUser>("SELECT * FROM "+nameof(TableUser)+" WHERE deleted=1");
-
-			foreach (TableUser user in users)
-				this.InvokeInstanceDevExtMethods("DeleteDataPlayerUser", user.name);
-			
-			if (users.Count > 0)
-				debug.Log("[DatabaseManager] Pruned " + users.Count + " inactive user(s)");
-#else
-			debug.LogWarning("[DatabaseManager] No users could be pruned (Define #wPLAYER missing)");
-#endif
-			
+		
+			/*
+				When using "Wovencode.PlayerComponent", the database will automatically
+				prune all users that have been soft deleted after a certain amount of time.
+				This process will also remove all characters of that user from the database
+				as well.
+				
+				If you don't use "Wovencode.PlayerComponent", you will have to provide
+				your own pruning functionality using the hook below, or nothing will
+				happen.
+					
+			*/
+				
 			this.InvokeInstanceDevExtMethods(nameof(DeleteUsers));
+			
 		}
 		
 		// -------------------------------------------------------------------------------
@@ -103,29 +105,12 @@ namespace Wovencode.Database
 		// -------------------------------------------------------------------------------
 		void SavePlayers(bool online = true)
     	{
-#if wNETWORK
-			
+
 			/*
 				When using "Wovencode.Network", the database will automatically save
 				all online players. If you use any other solution, you will have to
 				replace the code below with your own.
-			*/
 			
-    		if (Wovencode.Network.NetworkManager.onlinePlayers.Count == 0)
-    			return; 
-    		
-        	databaseLayer.BeginTransaction();
-        	
-        	foreach (GameObject player in Wovencode.Network.NetworkManager.onlinePlayers.Values)
-            	SaveDataPlayer(player, online, false);
-            
-        	databaseLayer.Commit();
-        	
-        	if (Wovencode.Network.NetworkManager.onlinePlayers.Count > 0)
-        		debug.Log("[Database] Saved " + Wovencode.Network.NetworkManager.onlinePlayers.Count + " player(s)");
-#else
-			
-			/*
 				In case of a single-player game, you will have to provide your own
 				code in order to save the current player to the database. You can
 				use the hook below to move the save process to another file, or
@@ -133,11 +118,7 @@ namespace Wovencode.Database
 			
 			*/
 			
-			debug.LogWarning("[Database] No players could be saved (Define #NETWORK missing)");
-			
-#endif
-
-			this.InvokeInstanceDevExtMethods(nameof(SavePlayers));
+			this.InvokeInstanceDevExtMethods(nameof(SavePlayers), online);
 			
     	}
     	
