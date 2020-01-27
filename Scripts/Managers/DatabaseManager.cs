@@ -115,6 +115,8 @@ namespace Wovencode.Database
 				code in order to save the current player to the database. You can
 				use the hook below to move the save process to another file, or
 				add your own code right here if preferred.
+				
+				Don't care about transaction or anything else at this point.
 			
 			*/
 			

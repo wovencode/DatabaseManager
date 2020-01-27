@@ -147,11 +147,8 @@ namespace Wovencode.Database
 		// -------------------------------------------------------------------------------
 		public void Insert(object obj)
 		{
-			debug.StartProfile("Insert");
 			databaseLayer.Insert(obj);
-			debug.StopProfile("Insert");
 			debug.Log("[DatabaseManager] Insert: "+obj);
-			debug.PrintProfile("Insert");
 		}
 		
 		// -------------------------------------------------------------------------------
