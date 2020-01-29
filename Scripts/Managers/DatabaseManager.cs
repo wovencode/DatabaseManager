@@ -86,7 +86,7 @@ namespace Wovencode.Database
 				happen.
 					
 			*/
-				
+			
 			this.InvokeInstanceDevExtMethods(nameof(DeleteUsers));
 			
 		}

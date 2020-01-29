@@ -103,7 +103,7 @@ namespace Wovencode.Database {
 					if (!String.IsNullOrWhiteSpace(prefix))
 						convertedString += prefix;
 						
-					convertedString += row.name;
+					convertedString += "`" + row.name + "`";
 			
 					if (row != rows.Last())
 						convertedString += ",";
@@ -226,6 +226,8 @@ namespace Wovencode.Database {
 		const string typeLong 		= " BIGINT";
 		const string typeString 	= " VARCHAR(64)";
 		const string typeDateTime 	= " DATETIME";
+		const string typeFloat		= " FLOAT";
+		const string typeDouble		= " DOUBLE";
 		
 		// -------------------------------------------------------------------------------
 		// ToMySQLString
@@ -236,23 +238,31 @@ namespace Wovencode.Database {
 			{
 				if (type == typeof(int))
 				{
-					return name + typeInt;
+					return  "`" + name + "`" + typeInt;
 				}
 				else if (type == typeof(bool))
 				{
-					return name + typeBool;
+					return "`" + name + "`" + typeBool;
 				}		
 				else if (type == typeof(long))
 				{
-					return name + typeLong;
+					return "`" + name + "`" + typeLong;
 				}		
 				else if (type == typeof(string))
 				{
-					return name + typeString;
+					return "`" + name + "`" + typeString;
 				}		
 				else if (type == typeof(DateTime))
 				{
-					return name + typeDateTime;
+					return "`" + name + "`" + typeDateTime;
+				}
+				else if (type == typeof(float))
+				{
+					return "`" + name + "`" + typeFloat;
+				}
+				else if (type == typeof(double))
+				{
+					return "`" + name + "`" + typeDouble;
 				}
 				
 				return "";

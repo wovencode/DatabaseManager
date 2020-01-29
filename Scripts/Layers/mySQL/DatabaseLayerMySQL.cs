@@ -28,12 +28,18 @@ namespace Wovencode.Database
 	{
 	
 		[Header("Settings")]
-        public string address 		= "127.0.0.1";
-        public uint port 			= 3306;
-        public string username 		= "root";
-        public string password		= "";
-        public string dbName 		= "mysqldatabase";
-		public string charset 		= "utf8mb4";
+		[Tooltip("Default: 127.0.0.1")]
+        public string address;
+        [Tooltip("Default: 3306")]
+        public uint port;
+        [Tooltip("Default: root")]
+        public string username;
+        [Tooltip("Default: password")]
+        public string password;
+        [Tooltip("Default: mysqldatabase")]
+        public string dbName;
+        [Tooltip("Default: utf8mb4")]
+		public string charset;
 		
 		protected MySqlConnection connection = null;
 		protected string connectionString = null;
@@ -83,7 +89,7 @@ namespace Wovencode.Database
 				primaryKeyString = ", PRIMARY KEY (`"+tableMap.GetPrimaryKey+"`)";
 			
 			string queryString = "CREATE TABLE IF NOT EXISTS "+tableMap.name+"("+tableMap.RowsToMySQLInsertString+primaryKeyString+") CHARACTER SET="+charset;
-			
+
 			ExecuteNonQuery(connection, null, queryString);
 			
 		}

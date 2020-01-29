@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7890701178789268688}
   - component: {fileID: 7890701178789268689}
   m_Layer: 0
-  m_Name: Database
+  m_Name: DatabaseManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -43,10 +43,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c927fd3fe7261488995ea8b673e2def7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  databaseType: 0
+  debug:
+    debugMode: 1
+  databaseType: 1
   saveInterval: 60
   deleteInterval: 60
   databaseLayer:
-    databaseName: Database.sqlite
-    initOnAwake: 0
-    checkIntegrity: 0
+    address: 127.0.0.1
+    port: 3306
+    username: root
+    password: password
+    dbName: database
+    charset: utf8mb4
