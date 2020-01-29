@@ -162,10 +162,10 @@ namespace Wovencode.Database {
 		// -------------------------------------------------------------------------------
 		// UpdateValue
 		// -------------------------------------------------------------------------------
-		public void UpdateValue(object obj)
+		public void UpdateValue(string rowname, object obj)
 		{
 			foreach (TableRow row in rows)
-				if (row.name == name)
+				if (row.name == rowname)
 					row.value = obj;
 		}
 		

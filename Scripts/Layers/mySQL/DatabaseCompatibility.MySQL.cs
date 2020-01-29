@@ -156,11 +156,19 @@ namespace Wovencode.Database
 					{
 						obj = reader.GetDateTime(map.rows[i].name);
 					}
-
-					map.UpdateValue(obj);
+					else if (map.rows[i].type == typeof(float))
+					{
+						obj = reader.GetFloat(map.rows[i].name);
+					}
+					else if (map.rows[i].type == typeof(double))
+					{
+						obj = reader.GetDouble(map.rows[i].name);
+					}
+					
+					map.UpdateValue(map.rows[i].name, obj);
 					
 				}
-				
+
 				results.Add(map.ToType<T>());
 			}
 			

@@ -120,7 +120,6 @@ namespace Wovencode.Database
 		public override List<T> Query<T>(string query, params object[] args)
 		{
 			MySQLRowsReader reader = ExecuteReader(connection, null, dbCompat.GetConvertedQuery(query), dbCompat.GetConvertedParameters(args));
-			
 			return dbCompat.ConvertReader<T>(reader);
 		}
 		
@@ -166,8 +165,8 @@ namespace Wovencode.Database
 			
 			TableMap tableMap = dbCompat.GetTableMap(obj);
 			
-			string queryString = "INSERT OR REPLACE INTO "+tableMap.name+" ("+tableMap.RowsToMySQLString()+") VALUES("+tableMap.RowsToMySQLString("@")+")";
-			
+			string queryString = "REPLACE INTO "+tableMap.name+" ("+tableMap.RowsToMySQLString()+") VALUES("+tableMap.RowsToMySQLString("@")+")";
+
 			ExecuteNonQuery(connection,null,  queryString, tableMap.RowsToMySQLParameters);
 		
 		}
