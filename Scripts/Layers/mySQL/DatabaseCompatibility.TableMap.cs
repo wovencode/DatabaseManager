@@ -101,9 +101,9 @@ namespace Wovencode.Database {
 				{
 					
 					if (!String.IsNullOrWhiteSpace(prefix))
-						convertedString += prefix;
-						
-					convertedString += "`" + row.name + "`";
+						convertedString += prefix + row.name;
+					else
+						convertedString += "`" + row.name + "`";
 			
 					if (row != rows.Last())
 						convertedString += ",";
