@@ -1,9 +1,4 @@
-﻿// =======================================================================================
-// Wovencore
-// by Weaver (Fhiz)
-// MIT licensed
-// =======================================================================================
-
+﻿
 using Wovencode;
 using Wovencode.Database;
 using System;
@@ -83,7 +78,7 @@ namespace Wovencode.Database
 		public MySqlParameter[] GetConvertedParameters(object[] args)
 		{
 		
-			int hash = Tools.GetDeterministicHashCode(args);
+			int hash = Tools.GetArrayHashCode(args);
 			
 			mySQLParameters.TryGetValue(hash, out MySqlParameter[] cachedParameters);
 			
