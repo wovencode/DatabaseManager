@@ -59,6 +59,8 @@ namespace Wovencode.Database
 				_databaseType = databaseType;
 			}
 			
+			databaseLayer.OnValidate();
+			
 			this.InvokeInstanceDevExtMethods(nameof(OnValidate));
 #endif
 		}
@@ -118,16 +120,6 @@ namespace Wovencode.Database
 			this.InvokeInstanceDevExtMethods(nameof(SavePlayers), online);
 			
     	}
-    	
-    	// =========================== DEFAULT EVENTS ====================================
-		
-		// -------------------------------------------------------------------------------
-		// OnApplicationQuit
-		// -------------------------------------------------------------------------------
-		void OnApplicationQuit()
-		{
-			Destruct();
-		}
     	
 		// -------------------------------------------------------------------------------
 

@@ -64,14 +64,15 @@ namespace Wovencode.Database
 		
 		// -------------------------------------------------------------------------------
 		// Destruct
-		// closes the connection, cancels saving and updates the checksum (if required)
+		// closes the connection, cancels saving and updates the checksum (if required),
+		// saves all online players and sets them offline.
 		// for a multiplayer server based game, this should only be called on the server
 		// -------------------------------------------------------------------------------
 		public void Destruct()
 		{
 			CancelInvoke();
+			SavePlayers(false);
 			CloseConnection();
-			this.InvokeInstanceDevExtMethods(nameof(Destruct));
 		}
 		
 		// -------------------------------------------------------------------------------

@@ -27,6 +27,7 @@ namespace Wovencode.Database
 		public abstract void InsertOrReplace(object obj);
 		public abstract void BeginTransaction();
 		public abstract void Commit();
+		public abstract void OnValidate();
 		
 	}
 

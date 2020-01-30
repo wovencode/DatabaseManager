@@ -11,6 +11,9 @@ using System.IO;
 using MySql.Data;
 using MySql.Data.MySqlClient;
 using SQLite;
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
 namespace Wovencode.Database
 {
@@ -187,6 +190,22 @@ namespace Wovencode.Database
 			ExecuteNonQuery("COMMIT");
 		}
 		
+		
+        // -------------------------------------------------------------------------------
+		// OnValidate
+		// -------------------------------------------------------------------------------
+		public override void OnValidate()
+		{
+#if UNITY_EDITOR
+			address 	= EditorTools.EditorPrefsUpdateString(Constants.EditorPrefsMySQLAddress, address);
+			port 		= (uint)EditorTools.EditorPrefsUpdateInt(Constants.EditorPrefsMySQLPort, (int)port);
+			username 	= EditorTools.EditorPrefsUpdateString(Constants.EditorPrefsMySQLUsername, username);
+			password 	= EditorTools.EditorPrefsUpdateString(Constants.EditorPrefsMySQLPassword, password);
+			dbName 		= EditorTools.EditorPrefsUpdateString(Constants.EditorPrefsMySQLDatabase, dbName);
+			charset		= EditorTools.EditorPrefsUpdateString(Constants.EditorPrefsMySQLCharset, charset);
+#endif
+		}
+        
 		// ============================== PRIVATE METHODS ================================
 		
 		/*
